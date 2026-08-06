@@ -1,0 +1,10 @@
+project_id = "student-feedback"
+
+[functions.feedback-analyze]
+verify_jwt = true
+
+[functions.admin-insights]
+verify_jwt = true
+
+[functions.admin-draft-reply]
+verify_jwt = true
