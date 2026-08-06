@@ -212,7 +212,7 @@ export default function SubmitFeedbackPage() {
   if (isSuccess) {
     return (
       <main className="flex-1 md:px-8 md:py-8 flex items-center justify-center">
-        <div className="bg-paper border border-rule p-8 rounded-card max-w-md w-full text-center">
+        <div className="bg-paper border border-rule p-8 rounded-card max-w-lg w-full text-center">
           <div className="w-12 h-12 bg-positive-bg rounded-full flex items-center justify-center mx-auto mb-4">
             <div className="w-5 h-5 rounded-full bg-positive" />
           </div>
@@ -244,7 +244,7 @@ export default function SubmitFeedbackPage() {
 
   return (
     <main className="flex-1">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="mb-6">
           <h2 className="font-display font-semibold tracking-tight text-2xl text-ink">
             Submit Feedback

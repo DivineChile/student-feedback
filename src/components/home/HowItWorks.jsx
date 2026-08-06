@@ -28,7 +28,7 @@ export default function HowItWorks() {
             <h2 className="font-display font-semibold text-ink text-display-s tracking-tight mb-3">
               How It Works
             </h2>
-            <p className="text-ink-2 max-w-xl mx-auto text-base">
+            <p className="text-ink-2 max-w-2xl mx-auto text-base">
               Three simple steps to make your voice heard on campus.
             </p>
           </div>
@@ -45,7 +45,7 @@ export default function HowItWorks() {
                   </div>
                 </div>
                 <h3 className="font-display font-semibold text-ink text-base mb-2">{step.title}</h3>
-                <p className="text-sm text-ink-2 leading-relaxed max-w-xs mx-auto">
+                <p className="text-sm text-ink-2 leading-relaxed max-w-md mx-auto">
                   {step.description}
                 </p>
               </div>

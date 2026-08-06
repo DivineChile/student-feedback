@@ -4,11 +4,11 @@ export default function CTA() {
   return (
     <section className="bg-paper-2 border-y border-rule py-2xl px-4 sm:px-6 lg:px-8">
       <FadeInSection>
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-display font-semibold text-ink text-display-s tracking-tight mb-4">
             Help Improve Your Institution
           </h2>
-          <p className="text-ink-2 text-base mb-8 leading-relaxed max-w-lg mx-auto">
+          <p className="text-ink-2 text-base mb-8 leading-relaxed max-w-xl mx-auto">
             Join students already making their campuses better — one piece
             of anonymous feedback at a time.
           </p>

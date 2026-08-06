@@ -28,7 +28,7 @@ export default function SecuritySection() {
 
         {/* Trust strip — heading, then a row of proof tiles, then a proof-marker row */}
         <FadeInSection>
-          <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-block bg-accent/10 text-accent text-xs font-medium px-3 py-1 rounded-pill mb-4">
               Privacy First
             </span>

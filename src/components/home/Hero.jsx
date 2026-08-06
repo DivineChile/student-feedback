@@ -7,7 +7,7 @@ const waveformBars = [8, 14, 22, 32, 24, 38, 20, 30, 16, 10, 6];
 export default function Hero() {
   return (
     <section className="bg-paper pt-32 pb-2xl px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="max-w-4xl mx-auto text-center">
 
         <FadeInSection>
           <span className="inline-block bg-accent/10 text-accent text-xs font-medium px-3 py-1 rounded-pill mb-6">
@@ -19,7 +19,7 @@ export default function Hero() {
             <span className="text-accent">Improve Your Campus</span>
           </h1>
 
-          <p className="text-ink-2 text-lg leading-relaxed mb-10 max-w-lg mx-auto">
+          <p className="text-ink-2 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
             A secure platform where students can share honest feedback about
             academics, facilities, and campus life — completely anonymously.
           </p>

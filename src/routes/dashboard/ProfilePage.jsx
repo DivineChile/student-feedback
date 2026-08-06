@@ -32,7 +32,7 @@ function ActiveBadge({ label }) {
 function LoadingState() {
   return (
     <main className="flex-1 px-6 md:px-8 py-8">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="bg-paper border border-rule rounded-card px-6 py-10 text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-muted">
             <Loader2 size={16} className="animate-spin" />
@@ -171,7 +171,7 @@ export default function ProfilePage() {
   if (!profile) {
     return (
       <main className="flex-1 px-6 md:px-8 py-8">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="bg-paper border border-rule rounded-card px-6 py-10 text-center">
             <p className="text-sm font-medium text-ink-2">
               Unable to load profile information
@@ -187,7 +187,7 @@ export default function ProfilePage() {
 
   return (
     <main className="flex-1 md:py-2">
-      <div className="max-w-3xl mx-auto flex flex-col gap-6">
+      <div className="max-w-4xl mx-auto flex flex-col gap-6">
         <div>
           <h2 className="font-display font-semibold tracking-tight text-2xl text-ink">
             Profile Overview

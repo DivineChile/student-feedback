@@ -18,7 +18,7 @@ function EmptyState() {
       <h3 className="text-sm font-semibold text-ink-2 mb-1">
         No feedback submitted yet
       </h3>
-      <p className="text-sm text-muted mb-5 max-w-xs mx-auto">
+      <p className="text-sm text-muted mb-5 max-w-md mx-auto">
         You haven&apos;t submitted any feedback. Help improve your institution by
         sharing your experience.
       </p>

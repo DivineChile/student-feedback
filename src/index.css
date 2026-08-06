@@ -12,14 +12,3 @@ body {
 .font-mono {
   font-family: var(--font-outlier);
 }
-
-.fade-in-hidden {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 700ms ease-out, transform 700ms ease-out;
-}
-
-.fade-in-visible {
-  opacity: 1;
-  transform: translateY(0px);
-}
