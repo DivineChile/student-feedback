@@ -118,8 +118,8 @@ export default function AdminStudentsPage() {
     <main className="flex-1">
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Students</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-display font-semibold text-ink">Students</h2>
+          <p className="text-sm text-muted mt-1">
             View registered student accounts and their feedback activity.
           </p>
         </div>
@@ -128,28 +128,28 @@ export default function AdminStudentsPage() {
           <SummaryCard
             label="Total Students"
             value={totalStudents}
-            icon={<Users size={20} className="text-blue-600" />}
-            iconBg="bg-blue-50"
+            icon={<Users size={20} className="text-ink-2" />}
+            iconBg="bg-paper-3"
           />
           <SummaryCard
             label="Departments"
             value={totalDepartments}
-            icon={<Building2 size={20} className="text-purple-600" />}
-            iconBg="bg-purple-50"
+            icon={<Building2 size={20} className="text-ink-2" />}
+            iconBg="bg-paper-3"
           />
           <SummaryCard
             label="Have Submitted Feedback"
             value={activeStudents}
-            valueColor="text-green-600"
-            icon={<GraduationCap size={20} className="text-green-600" />}
-            iconBg="bg-green-50"
+            valueColor="text-positive"
+            icon={<GraduationCap size={20} className="text-positive" />}
+            iconBg="bg-positive-bg"
           />
           <SummaryCard
             label="Total Feedback Submitted"
             value={totalFeedback}
-            valueColor="text-orange-500"
-            icon={<MessageSquareText size={20} className="text-orange-500" />}
-            iconBg="bg-orange-50"
+            valueColor="text-accent"
+            icon={<MessageSquareText size={20} className="text-accent" />}
+            iconBg="bg-paper-3"
           />
         </div>
 
@@ -157,24 +157,24 @@ export default function AdminStudentsPage() {
           <div className="relative flex-1">
             <Search
               size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
             />
             <input
               type="text"
               placeholder="Search by name, matric number, or email..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white
-                text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2
-                focus:ring-blue-500 focus:border-transparent transition"
+              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-input border border-rule bg-paper
+                text-ink placeholder-muted focus:outline-none focus:ring-2
+                focus:ring-focus focus:border-transparent transition"
             />
           </div>
 
           <select
             value={departmentFilter}
             onChange={(e) => setDepartmentFilter(e.target.value)}
-            className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+              focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
           >
             <option value="all">All Departments</option>
             {departments.map((department) => (
@@ -185,87 +185,135 @@ export default function AdminStudentsPage() {
           </select>
         </div>
 
-        <section className="bg-white border border-gray-200 rounded-xl shadow-sm">
+        <section className="bg-paper border border-rule rounded-card">
           {isLoading ? (
             <div className="px-6 py-14 text-center">
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center justify-center gap-2 text-sm text-muted">
                 <Loader2 size={16} className="animate-spin" />
                 Loading student accounts...
               </div>
             </div>
           ) : filteredStudents.length === 0 ? (
             <div className="px-6 py-14 text-center">
-              <p className="text-sm font-medium text-gray-600">No students found</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-ink-2">No students found</p>
+              <p className="text-xs text-muted mt-1">
                 Try adjusting your search or department filter.
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[980px]">
-                <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Student
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Matric Number
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Department
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Level
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Admission Year
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Feedback Submitted
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Joined
-                    </th>
-                  </tr>
-                </thead>
+            <>
+              {/* Desktop / tablet: spec-sheet table, scrolls horizontally within its own wrapper only */}
+              <div className="hidden sm:block overflow-x-auto">
+                <table className="w-full min-w-[980px]">
+                  <thead>
+                    <tr className="border-b border-rule bg-paper-2">
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Student
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Matric Number
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Department
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Level
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Admission Year
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Feedback Submitted
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Joined
+                      </th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {filteredStudents.map((student) => (
-                    <tr key={student.id} className="border-b border-gray-100 last:border-b-0">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold flex items-center justify-center shrink-0">
-                            {getInitials(student.fullName)}
+                  <tbody>
+                    {filteredStudents.map((student) => (
+                      <tr key={student.id} className="border-b border-rule last:border-b-0">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-paper-3 text-ink-2 text-xs font-semibold flex items-center justify-center shrink-0">
+                              {getInitials(student.fullName)}
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-ink">{student.fullName}</p>
+                              <p className="text-xs text-muted">{student.email}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">{student.fullName}</p>
-                            <p className="text-xs text-gray-500">{student.email}</p>
-                          </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      <td className="px-6 py-4 text-sm text-gray-700">{student.matricNumber}</td>
+                        <td className="px-6 py-4 text-sm font-outlier text-ink-2">{student.matricNumber}</td>
 
-                      <td className="px-6 py-4 text-sm text-gray-700">{student.department}</td>
+                        <td className="px-6 py-4 text-sm text-ink-2">{student.department}</td>
 
-                      <td className="px-6 py-4 text-sm text-gray-700">{student.level}</td>
+                        <td className="px-6 py-4 text-sm font-outlier text-ink-2">{student.level}</td>
 
-                      <td className="px-6 py-4 text-sm text-gray-700">{student.admissionYear}</td>
+                        <td className="px-6 py-4 text-sm font-outlier text-ink-2">{student.admissionYear}</td>
 
-                      <td className="px-6 py-4">
-                        <span className="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-700">
+                        <td className="px-6 py-4">
+                          <span className="text-xs font-outlier px-2.5 py-1 rounded-pill bg-paper-3 text-ink-2">
+                            {student.feedbackCount}
+                          </span>
+                        </td>
+
+                        <td className="px-6 py-4 text-sm font-outlier text-muted">
+                          {formatDate(student.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile: stacked key/value rows instead of a cramped table */}
+              <div className="sm:hidden flex flex-col">
+                {filteredStudents.map((student) => (
+                  <div key={student.id} className="px-6 py-4 border-b border-rule last:border-b-0 flex flex-col gap-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-paper-3 text-ink-2 text-xs font-semibold flex items-center justify-center shrink-0">
+                        {getInitials(student.fullName)}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-ink truncate">{student.fullName}</p>
+                        <p className="text-xs text-muted truncate">{student.email}</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-xs pt-1">
+                      <div>
+                        <p className="text-muted uppercase tracking-wide text-[10px] mb-0.5">Matric</p>
+                        <p className="font-outlier text-ink-2">{student.matricNumber}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted uppercase tracking-wide text-[10px] mb-0.5">Department</p>
+                        <p className="text-ink-2">{student.department}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted uppercase tracking-wide text-[10px] mb-0.5">Level</p>
+                        <p className="font-outlier text-ink-2">{student.level}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted uppercase tracking-wide text-[10px] mb-0.5">Admission Year</p>
+                        <p className="font-outlier text-ink-2">{student.admissionYear}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted uppercase tracking-wide text-[10px] mb-0.5">Feedback</p>
+                        <span className="text-xs font-outlier px-2 py-0.5 rounded-pill bg-paper-3 text-ink-2">
                           {student.feedbackCount}
                         </span>
-                      </td>
-
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {formatDate(student.createdAt)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      </div>
+                      <div>
+                        <p className="text-muted uppercase tracking-wide text-[10px] mb-0.5">Joined</p>
+                        <p className="font-outlier text-ink-2">{formatDate(student.createdAt)}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </section>
       </div>

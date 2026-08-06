@@ -20,30 +20,32 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-white py-20 px-4 sm:px-6 lg:px-8">
+    <section id="how-it-works" className="bg-paper py-2xl px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
 
         <FadeInSection>
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">How It Works</h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-base">
+            <h2 className="font-display font-semibold text-ink text-display-s tracking-tight mb-3">
+              How It Works
+            </h2>
+            <p className="text-ink-2 max-w-xl mx-auto text-base">
               Three simple steps to make your voice heard on campus.
             </p>
           </div>
         </FadeInSection>
 
         <FadeInSection delay={150}>
-          <div className="grid sm:grid-cols-3 gap-8 relative">
-            <div className="hidden sm:block absolute top-8 left-1/4 right-1/4 h-px bg-gray-200 z-0" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 relative">
+            <div className="hidden sm:block absolute top-8 left-1/4 right-1/4 h-px bg-rule z-0" />
             {steps.map((step) => (
               <div key={step.number} className="relative z-10 text-center">
                 <div className="flex justify-center mb-5">
-                  <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md">
+                  <div className="w-16 h-16 bg-accent text-accent-ink rounded-pill flex items-center justify-center font-outlier text-lg shadow-sm">
                     {step.number}
                   </div>
                 </div>
-                <h3 className="font-semibold text-gray-900 text-base mb-2">{step.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed max-w-xs mx-auto">
+                <h3 className="font-display font-semibold text-ink text-base mb-2">{step.title}</h3>
+                <p className="text-sm text-ink-2 leading-relaxed max-w-xs mx-auto">
                   {step.description}
                 </p>
               </div>

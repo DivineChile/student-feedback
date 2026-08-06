@@ -9,24 +9,24 @@ export const CustomToaster = () => (
         {({ icon, message }) => {
           // Determine icon based on type
           const typeIcon = (() => {
-            if (t.type === "success") return <CheckCircle className="text-white" size={18} />;
-            if (t.type === "error") return <AlertCircle className="text-white" size={18} />;
-            if (t.type === "blank") return <Info className="text-white" size={18} />;
+            if (t.type === "success") return <CheckCircle className="text-accent-ink" size={18} />;
+            if (t.type === "error") return <AlertCircle className="text-accent-ink" size={18} />;
+            if (t.type === "blank") return <Info className="text-accent-ink" size={18} />;
             return icon;
           })();
 
           // Determine background color
           const bgColor =
             t.type === "success"
-              ? "bg-green-500"
+              ? "bg-positive"
               : t.type === "error"
-              ? "bg-red-500"
-              : "bg-blue-500";
+              ? "bg-negative"
+              : "bg-accent";
 
           return (
             <div
               className={`
-                flex items-center justify-between gap-4 px-2 py-2 w-fit rounded-md shadow-md text-white font-small text-sm
+                flex items-center justify-between gap-4 px-2 py-2 w-fit rounded-card shadow-md text-accent-ink font-small text-sm
                 ${bgColor} ${t.visible ? "animate-custom-enter" : "animate-custom-leave"}
               `}
             >
@@ -35,7 +35,7 @@ export const CustomToaster = () => (
               {t.type !== "loading" && (
                 <button
                   onClick={() => toast.dismiss(t.id)}
-                  className="text-white hover:text-gray-200 transition cursor-pointer"
+                  className="text-accent-ink hover:opacity-80 transition cursor-pointer"
                   aria-label="Dismiss"
                 >
                   <X size={16} />

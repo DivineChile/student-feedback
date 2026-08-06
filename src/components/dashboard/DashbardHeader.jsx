@@ -55,63 +55,56 @@ export default function DashboardHeader({
   };
 
   return (
-    <header className="sticky top-0 z-30 bg-slate-50 border-b border-slate-200">
+    <header className="sticky top-0 z-30 bg-paper border-b border-rule">
       {/* Main header row */}
       <div className="flex items-center justify-between px-6 py-4">
         {/* LEFT — Logo (mobile only) + Title */}
         <div className="flex items-center gap-3">
-          {/* Logo — mobile only */}
           <Link to="/" className="flex items-center gap-2 md:hidden">
-            <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center shrink-0">
-              <span className="text-white font-bold text-xs">CV</span>
+            <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
+              <span className="text-accent-ink font-display font-semibold text-xs">CV</span>
             </div>
           </Link>
 
-          {/* Title + subtitle */}
           <div>
-            <h1 className="text-base font-semibold text-gray-900 leading-tight">{finalTitle}</h1>
-            <p className="text-xs text-gray-500 hidden sm:block mt-0.5">{finalSubtitle}</p>
+            <h1 className="text-base font-semibold text-ink leading-tight">{finalTitle}</h1>
+            <p className="text-xs text-muted hidden sm:block mt-0.5">{finalSubtitle}</p>
           </div>
         </div>
 
         {/* RIGHT — Desktop actions + mobile hamburger */}
         <div className="flex items-center gap-3">
-          {/* Submit Feedback button — desktop only */}
           <Link
             to="/dashboard/submit-feedback"
-            className="hidden md:flex items-center gap-2 bg-blue-600 text-white text-sm
-              font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            className="hidden md:flex items-center gap-2 bg-accent text-accent-ink text-sm
+              font-medium px-4 py-2 rounded-pill hover:opacity-90 transition-opacity duration-200"
           >
             <Send size={15} />
             Submit Feedback
           </Link>
 
-          {/* Notification bell — desktop only */}
           <button
-            className="hidden md:flex items-center justify-center w-9 h-9 rounded-lg
-              text-gray-500 hover:bg-slate-200 transition-colors duration-200"
+            className="hidden md:flex items-center justify-center w-9 h-9 rounded-pill
+              text-ink-2 hover:bg-paper-2 transition-colors duration-200"
             aria-label="Notifications"
           >
             <Bell size={18} />
           </button>
 
-          {/* User mini-profile — desktop only */}
           <div className="hidden md:flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-slate-300 flex items-center justify-center shrink-0">
-              <span className="text-sm font-semibold text-slate-700">{studentInitials}</span>
+            <div className="w-9 h-9 rounded-full bg-paper-3 flex items-center justify-center shrink-0">
+              <span className="text-sm font-semibold text-ink-2">{studentInitials}</span>
             </div>
-            <span className="text-sm font-medium text-gray-700">{studentName}</span>
+            <span className="text-sm font-medium text-ink-2">{studentName}</span>
           </div>
 
-          {/* Avatar — mobile only (name hidden) */}
-          <Link to="/dashboard/profile" className="flex md:hidden items-center justify-center w-9 h-9 rounded-full bg-slate-300 shrink-0">
-            <span className="text-sm font-semibold text-slate-700">{studentInitials}</span>
+          <Link to="/dashboard/profile" className="flex md:hidden items-center justify-center w-9 h-9 rounded-full bg-paper-3 shrink-0">
+            <span className="text-sm font-semibold text-ink-2">{studentInitials}</span>
           </Link>
 
-          {/* Hamburger — mobile only */}
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="md:hidden p-2 text-gray-500 hover:text-gray-900 transition-colors"
+            className="md:hidden p-2 text-ink-2 hover:text-ink transition-colors"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -121,7 +114,7 @@ export default function DashboardHeader({
 
       {/* Mobile dropdown menu */}
       {menuOpen && (
-        <nav className="md:hidden border-t border-slate-200 bg-slate-50 px-4 py-3 flex flex-col gap-1">
+        <nav className="md:hidden border-t border-rule bg-paper px-4 py-3 flex flex-col gap-1">
           {navLinks.map(({ label, href, icon: Icon }) => {
             const isActive = pathname === href;
             return (
@@ -129,11 +122,11 @@ export default function DashboardHeader({
                 key={label}
                 to={href}
                 onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm transition-colors
                   ${
                     isActive
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-600 hover:bg-slate-200 hover:text-gray-900"
+                      ? "bg-accent text-accent-ink"
+                      : "text-ink-2 hover:bg-paper-2 hover:text-ink"
                   }`}
               >
                 <Icon size={17} />
@@ -142,12 +135,11 @@ export default function DashboardHeader({
             );
           })}
 
-          {/* Logout */}
-          <div className="border-t border-slate-200 mt-2 pt-2">
+          <div className="border-t border-rule mt-2 pt-2">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm
-                text-gray-600 hover:bg-slate-200 hover:text-gray-900 transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm
+                text-ink-2 hover:bg-paper-2 hover:text-ink transition-colors"
             >
               <LogOut size={17} />
               Logout

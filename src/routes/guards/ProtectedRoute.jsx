@@ -5,7 +5,7 @@ import { useAuth } from "@/context/useAuth";
 function FullScreenSpinner() {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Loader2 size={24} className="animate-spin text-blue-600" />
+      <Loader2 size={24} className="animate-spin text-accent" />
     </div>
   );
 }

@@ -18,7 +18,7 @@ function InputField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-gray-700">
+      <label htmlFor={id} className="text-sm font-medium text-ink">
         {label}
       </label>
 
@@ -29,9 +29,9 @@ function InputField({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`w-full px-4 py-2.5 text-sm rounded-lg border bg-white text-gray-900 placeholder-gray-400
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition
-            ${error ? "border-red-400 focus:ring-red-400" : "border-gray-200"}`}
+          className={`w-full px-4 py-2.5 text-sm rounded-input border bg-paper text-ink placeholder-ink-2/60
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent transition-colors
+            ${error ? "border-negative" : "border-rule"}`}
         />
 
         {rightElement && (
@@ -41,7 +41,7 @@ function InputField({
         )}
       </div>
 
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-negative">{error}</p>}
     </div>
   )
 }
@@ -190,7 +190,7 @@ export default function RegisterForm() {
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-ink-2 hover:text-ink transition-colors"
           >
             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
@@ -200,8 +200,8 @@ export default function RegisterForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-blue-600 text-white text-sm font-medium py-2.5 rounded-lg
-        hover:bg-blue-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
+        className="w-full bg-accent text-accent-ink text-sm font-medium py-2.5 rounded-pill
+        hover:opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>

@@ -72,12 +72,12 @@ export default function AdminOverviewPage() {
     return (
       <div className="flex flex-col gap-8 max-w-6xl">
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back 👋</h2>
-          <p className="text-sm text-gray-500">
+          <h2 className="text-2xl font-display font-semibold text-ink mb-1">Welcome back</h2>
+          <p className="text-sm text-muted">
             Monitor feedback activity, review student concerns, and track institutional response.
           </p>
         </section>
-        <div className="flex items-center justify-center gap-2 text-sm text-gray-500 py-14">
+        <div className="flex items-center justify-center gap-2 text-sm text-muted py-14">
           <Loader2 size={16} className="animate-spin" />
           Loading dashboard...
         </div>
@@ -89,8 +89,8 @@ export default function AdminOverviewPage() {
     return (
       <div className="flex flex-col gap-8 max-w-6xl">
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back 👋</h2>
-          <p className="text-sm text-red-500">
+          <h2 className="text-2xl font-display font-semibold text-ink mb-1">Welcome back</h2>
+          <p className="text-sm text-negative">
             Failed to load dashboard data. Please try again.
           </p>
         </section>
@@ -125,84 +125,87 @@ export default function AdminOverviewPage() {
   return (
     <div className="flex flex-col gap-8 max-w-6xl">
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back 👋</h2>
-        <p className="text-sm text-gray-500">
+        <h2 className="text-2xl font-display font-semibold text-ink mb-1">Welcome back</h2>
+        <p className="text-sm text-muted">
           Monitor feedback activity, review student concerns, and track institutional response.
         </p>
       </section>
 
       <section>
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+        <h3 className="text-xs font-semibold text-muted uppercase tracking-wide mb-4">
           Feedback Overview
         </h3>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <SummaryCard
+            size="lg"
             label="Total Feedback"
             value={totalFeedback}
-            icon={<MessageSquareText size={20} className="text-blue-600" />}
-            iconBg="bg-blue-50"
+            icon={<MessageSquareText size={22} className="text-ink-2" />}
+            iconBg="bg-paper-3"
           />
-          <SummaryCard
-            label="Pending"
-            value={pendingCount}
-            valueColor="text-yellow-600"
-            icon={<Clock size={20} className="text-yellow-600" />}
-            iconBg="bg-yellow-50"
-          />
-          <SummaryCard
-            label="Reviewed"
-            value={reviewedCount}
-            valueColor="text-blue-600"
-            icon={<MessageSquareText size={20} className="text-blue-600" />}
-            iconBg="bg-blue-50"
-          />
-          <SummaryCard
-            label="Resolved"
-            value={resolvedCount}
-            valueColor="text-green-600"
-            icon={<CheckCheck size={20} className="text-green-600" />}
-            iconBg="bg-green-50"
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:col-span-2">
+            <SummaryCard
+              label="Pending"
+              value={pendingCount}
+              valueColor="text-pending"
+              icon={<Clock size={20} className="text-pending" />}
+              iconBg="bg-pending-bg"
+            />
+            <SummaryCard
+              label="Reviewed"
+              value={reviewedCount}
+              valueColor="text-reviewed"
+              icon={<MessageSquareText size={20} className="text-reviewed" />}
+              iconBg="bg-reviewed-bg"
+            />
+            <SummaryCard
+              label="Resolved"
+              value={resolvedCount}
+              valueColor="text-positive"
+              icon={<CheckCheck size={20} className="text-positive" />}
+              iconBg="bg-positive-bg"
+            />
+          </div>
         </div>
       </section>
 
       <section>
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+        <h3 className="text-xs font-semibold text-muted uppercase tracking-wide mb-4">
           Sentiment Insights
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <SummaryCard
             label="Positive Sentiment"
             value={positiveSentimentCount}
-            valueColor="text-green-600"
-            icon={<ThumbsUp size={20} className="text-green-600" />}
-            iconBg="bg-green-50"
+            valueColor="text-positive"
+            icon={<ThumbsUp size={20} className="text-positive" />}
+            iconBg="bg-positive-bg"
           />
           <SummaryCard
             label="Negative Sentiment"
             value={negativeSentimentCount}
-            valueColor="text-red-500"
-            icon={<ThumbsDown size={20} className="text-red-500" />}
-            iconBg="bg-red-50"
+            valueColor="text-negative"
+            icon={<ThumbsDown size={20} className="text-negative" />}
+            iconBg="bg-negative-bg"
           />
           <SummaryCard
             label="Average Rating"
             value={averageRating}
-            valueColor="text-orange-500"
-            icon={<Star size={20} className="text-orange-500" />}
-            iconBg="bg-orange-50"
+            valueColor="text-accent"
+            icon={<Star size={20} className="text-accent" />}
+            iconBg="bg-paper-3"
           />
         </div>
       </section>
 
       <div className="grid lg:grid-cols-3 gap-6">
         <section className="lg:col-span-2">
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-              <h3 className="text-sm font-semibold text-gray-900">Recent Feedback</h3>
+          <div className="bg-paper border border-rule rounded-card">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-rule">
+              <h3 className="text-sm font-semibold text-ink">Recent Feedback</h3>
               <Link
                 to="/admin/feedback"
-                className="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                className="text-xs text-accent hover:opacity-80 font-medium transition-opacity"
               >
                 View all →
               </Link>
@@ -210,7 +213,7 @@ export default function AdminOverviewPage() {
 
             <div className="px-6">
               {recentFeedback.length === 0 ? (
-                <div className="py-10 text-center text-sm text-gray-500">
+                <div className="py-10 text-center text-sm text-muted">
                   No feedback available yet.
                 </div>
               ) : (
@@ -223,7 +226,7 @@ export default function AdminOverviewPage() {
         </section>
 
         <section className="flex flex-col gap-4">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+          <h3 className="text-xs font-semibold text-muted uppercase tracking-wide">
             Quick Actions
           </h3>
 
@@ -232,7 +235,7 @@ export default function AdminOverviewPage() {
             description="Browse and manage all student feedback submissions."
             href="/admin/feedback"
             buttonLabel="Go to Feedback"
-            icon={<MessageSquareText size={20} className="text-blue-600" />}
+            icon={<MessageSquareText size={20} className="text-ink-2" />}
           />
 
           <QuickActionCard
@@ -240,7 +243,7 @@ export default function AdminOverviewPage() {
             description="Explore trends and patterns across all categories."
             href="/admin/analytics"
             buttonLabel="Open Analytics"
-            icon={<BarChart2 size={20} className="text-blue-600" />}
+            icon={<BarChart2 size={20} className="text-ink-2" />}
           />
 
           <QuickActionCard
@@ -248,7 +251,7 @@ export default function AdminOverviewPage() {
             description="Export institutional summaries and activity reports."
             href="/admin/reports"
             buttonLabel="View Reports"
-            icon={<FileText size={20} className="text-blue-600" />}
+            icon={<FileText size={20} className="text-ink-2" />}
           />
         </section>
       </div>

@@ -4,13 +4,15 @@ import { getUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabaseClient";
 import { showToast } from "@/components/ui/toast";
 
-function InfoItem({ label, value }) {
+function InfoItem({ label, value, mono = false }) {
   return (
     <div className="flex flex-col gap-1">
-      <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
+      <p className="text-xs text-muted font-medium uppercase tracking-wide">
         {label}
       </p>
-      <p className="text-sm text-gray-800 font-medium">{value}</p>
+      <p className={`text-sm text-ink font-medium ${mono ? "font-outlier" : ""}`}>
+        {value}
+      </p>
     </div>
   );
 }
@@ -18,10 +20,10 @@ function InfoItem({ label, value }) {
 function ActiveBadge({ label }) {
   return (
     <span
-      className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700
-      bg-green-50 border border-green-200 px-2.5 py-1 rounded-full"
+      className="inline-flex items-center gap-1.5 text-xs font-medium text-positive
+      bg-positive-bg px-2.5 py-1 rounded-pill"
     >
-      <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+      <span className="w-1.5 h-1.5 rounded-full bg-positive shrink-0" />
       {label}
     </span>
   );
@@ -31,8 +33,8 @@ function LoadingState() {
   return (
     <main className="flex-1 px-6 md:px-8 py-8">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm px-6 py-10 text-center">
-          <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+        <div className="bg-paper border border-rule rounded-card px-6 py-10 text-center">
+          <div className="flex items-center justify-center gap-2 text-sm text-muted">
             <Loader2 size={16} className="animate-spin" />
             Loading profile...
           </div>
@@ -170,11 +172,11 @@ export default function ProfilePage() {
     return (
       <main className="flex-1 px-6 md:px-8 py-8">
         <div className="max-w-3xl mx-auto">
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm px-6 py-10 text-center">
-            <p className="text-sm font-medium text-gray-600">
+          <div className="bg-paper border border-rule rounded-card px-6 py-10 text-center">
+            <p className="text-sm font-medium text-ink-2">
               Unable to load profile information
             </p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-muted mt-1">
               Please refresh the page or try again later.
             </p>
           </div>
@@ -187,34 +189,36 @@ export default function ProfilePage() {
     <main className="flex-1 md:py-2">
       <div className="max-w-3xl mx-auto flex flex-col gap-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Profile Overview</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="font-display font-semibold tracking-tight text-2xl text-ink">
+            Profile Overview
+          </h2>
+          <p className="text-sm text-muted mt-1">
             View your student account information.
           </p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
+        <div className="bg-paper border border-rule rounded-card p-6">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
-            <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-              <span className="text-white text-xl font-bold">
+            <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center shrink-0">
+              <span className="text-accent-ink text-xl font-semibold font-display">
                 {profile.initials}
               </span>
             </div>
 
             <div className="flex-1 text-center sm:text-left">
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-semibold text-ink font-display">
                 {profile.fullName}
               </h3>
-              <p className="text-sm text-gray-500 mt-0.5">{profile.email}</p>
+              <p className="text-sm text-muted mt-0.5">{profile.email}</p>
 
               <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-3">
-                <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
+                <span className="font-outlier text-xs bg-paper-3 text-ink-2 border border-rule px-3 py-1 rounded-pill">
                   {profile.matricNumber}
                 </span>
-                <span className="text-xs bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full">
+                <span className="text-xs bg-paper-3 text-ink-2 border border-rule px-3 py-1 rounded-pill">
                   {profile.department}
                 </span>
-                <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
+                <span className="text-xs bg-paper-3 text-ink-2 border border-rule px-3 py-1 rounded-pill">
                   {profile.level}
                 </span>
               </div>
@@ -222,8 +226,8 @@ export default function ProfilePage() {
 
             <div className="shrink-0">
               <span
-                className="text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-100
-                px-3 py-1.5 rounded-full"
+                className="text-xs font-semibold text-ink-2 bg-paper-3 border border-rule
+                px-3 py-1.5 rounded-pill"
               >
                 {profile.role}
               </span>
@@ -231,41 +235,41 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
-          <h4 className="text-sm font-semibold text-gray-700 mb-5">
+        <div className="bg-paper border border-rule rounded-card p-6">
+          <h4 className="text-sm font-semibold text-ink-2 mb-5">
             Account Details
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
             <InfoItem label="Full Name" value={profile.fullName} />
-            <InfoItem label="Matric Number" value={profile.matricNumber} />
+            <InfoItem label="Matric Number" value={profile.matricNumber} mono />
             <InfoItem label="Email Address" value={profile.email} />
             <InfoItem label="Role" value={profile.role} />
             <InfoItem label="Department" value={profile.department} />
             <InfoItem label="Level" value={profile.level} />
-            <InfoItem label="Admission Year" value={profile.admissionYear} />
-            <InfoItem label="Account Created" value={profile.accountCreated} />
+            <InfoItem label="Admission Year" value={profile.admissionYear} mono />
+            <InfoItem label="Account Created" value={profile.accountCreated} mono />
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
-          <h4 className="text-sm font-semibold text-gray-700 mb-5">
+        <div className="bg-paper border border-rule rounded-card p-6">
+          <h4 className="text-sm font-semibold text-ink-2 mb-5">
             Account Status
           </h4>
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 flex flex-col gap-1.5">
-              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
+              <p className="text-xs text-muted font-medium uppercase tracking-wide">
                 Account Status
               </p>
               <ActiveBadge label="Active" />
             </div>
             <div className="flex-1 flex flex-col gap-1.5">
-              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
+              <p className="text-xs text-muted font-medium uppercase tracking-wide">
                 Feedback Access
               </p>
               <ActiveBadge label="Enabled" />
             </div>
             <div className="flex-1 flex flex-col gap-1.5">
-              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
+              <p className="text-xs text-muted font-medium uppercase tracking-wide">
                 Anonymous Submission
               </p>
               <ActiveBadge label="Available" />
@@ -273,11 +277,11 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-4">
-          <p className="text-sm font-medium text-blue-800 mb-0.5">
+        <div className="bg-paper-2 border border-rule rounded-card px-5 py-4">
+          <p className="text-sm font-medium text-ink mb-0.5">
             Profile editing is currently not available.
           </p>
-          <p className="text-sm text-blue-600">
+          <p className="text-sm text-ink-2">
             If you need to update your account details, please contact the
             administrator.
           </p>

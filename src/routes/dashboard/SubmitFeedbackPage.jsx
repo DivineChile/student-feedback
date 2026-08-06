@@ -18,16 +18,16 @@ const RATINGS = [
 function SelectField({ label, id, value, onChange, options, error }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-gray-700">
+      <label htmlFor={id} className="text-sm font-medium text-ink-2">
         {label}
       </label>
       <select
         id={id}
         value={value}
         onChange={onChange}
-        className={`w-full px-4 py-2.5 text-sm rounded-lg border bg-white text-gray-900
-          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition
-          ${error ? "border-red-400 focus:ring-red-400" : "border-gray-200"}`}
+        className={`w-full px-4 py-2.5 text-sm rounded-input border bg-paper text-ink
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent transition
+          ${error ? "border-negative focus-visible:ring-negative" : "border-rule"}`}
       >
         <option value="">Select a category</option>
         {options.map((opt) => (
@@ -36,7 +36,7 @@ function SelectField({ label, id, value, onChange, options, error }) {
           </option>
         ))}
       </select>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-negative">{error}</p>}
     </div>
   );
 }
@@ -44,7 +44,7 @@ function SelectField({ label, id, value, onChange, options, error }) {
 function InputField({ label, id, placeholder, value, onChange, error }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-gray-700">
+      <label htmlFor={id} className="text-sm font-medium text-ink-2">
         {label}
       </label>
       <input
@@ -53,12 +53,12 @@ function InputField({ label, id, placeholder, value, onChange, error }) {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`w-full px-4 py-2.5 text-sm rounded-lg border bg-white text-gray-900
-          placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500
+        className={`w-full px-4 py-2.5 text-sm rounded-input border bg-paper text-ink
+          placeholder:text-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-focus
           focus:border-transparent transition
-          ${error ? "border-red-400 focus:ring-red-400" : "border-gray-200"}`}
+          ${error ? "border-negative focus-visible:ring-negative" : "border-rule"}`}
       />
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-negative">{error}</p>}
     </div>
   );
 }
@@ -212,28 +212,28 @@ export default function SubmitFeedbackPage() {
   if (isSuccess) {
     return (
       <main className="flex-1 md:px-8 md:py-8 flex items-center justify-center">
-        <div className="bg-white border p-8 border-gray-200 rounded-xl shadow-sm max-w-md w-full text-center">
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <div className="w-5 h-5 rounded-full bg-green-500" />
+        <div className="bg-paper border border-rule p-8 rounded-card max-w-md w-full text-center">
+          <div className="w-12 h-12 bg-positive-bg rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-5 h-5 rounded-full bg-positive" />
           </div>
 
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+          <h2 className="text-lg font-semibold text-ink mb-2 font-display">
             Feedback Submitted
           </h2>
 
-          <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3 text-left mb-6">
-            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">
+          <div className="bg-paper-2 border border-rule rounded-card px-4 py-3 text-left mb-6">
+            <p className="text-xs font-semibold text-ink-2 uppercase tracking-wide mb-1">
               System Response
             </p>
-            <p className="text-sm text-blue-900 leading-relaxed">
+            <p className="text-sm text-ink leading-relaxed">
               {systemResponse}
             </p>
           </div>
 
           <button
             onClick={handleReset}
-            className="w-full bg-blue-600 text-white text-sm font-medium py-2.5 rounded-lg
-              hover:bg-blue-700 transition-colors duration-200"
+            className="w-full bg-accent text-accent-ink text-sm font-medium py-2.5 rounded-pill
+              hover:opacity-90 transition-opacity duration-200"
           >
             Submit Another
           </button>
@@ -246,13 +246,15 @@ export default function SubmitFeedbackPage() {
     <main className="flex-1">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Submit Feedback</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="font-display font-semibold tracking-tight text-2xl text-ink">
+            Submit Feedback
+          </h2>
+          <p className="text-sm text-muted mt-1">
             Share your experience to help improve the institution.
           </p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 md:p-8">
+        <div className="bg-paper border border-rule rounded-card p-6 md:p-8">
           <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
             <SelectField
               label="Category"
@@ -273,7 +275,7 @@ export default function SubmitFeedbackPage() {
             />
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="comment" className="text-sm font-medium text-gray-700">
+              <label htmlFor="comment" className="text-sm font-medium text-ink-2">
                 Comment
               </label>
               <textarea
@@ -282,18 +284,18 @@ export default function SubmitFeedbackPage() {
                 placeholder="Describe your experience or issue in detail..."
                 value={formData.comment}
                 onChange={(e) => handleChange("comment", e.target.value)}
-                className={`w-full px-4 py-2.5 text-sm rounded-lg border bg-white text-gray-900
-                  placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500
+                className={`w-full px-4 py-2.5 text-sm rounded-input border bg-paper text-ink
+                  placeholder:text-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-focus
                   focus:border-transparent transition resize-none
-                  ${errors.comment ? "border-red-400 focus:ring-red-400" : "border-gray-200"}`}
+                  ${errors.comment ? "border-negative focus-visible:ring-negative" : "border-rule"}`}
               />
               {errors.comment && (
-                <p className="text-xs text-red-500">{errors.comment}</p>
+                <p className="text-xs text-negative">{errors.comment}</p>
               )}
             </div>
 
             <div className="flex flex-col gap-2">
-              <span className="text-sm font-medium text-gray-700">Rating</span>
+              <span className="text-sm font-medium text-ink-2">Rating</span>
               <div className="flex flex-wrap gap-2">
                 {RATINGS.map(({ value, label }) => {
                   const isSelected = formData.rating === value;
@@ -303,20 +305,20 @@ export default function SubmitFeedbackPage() {
                       key={value}
                       type="button"
                       onClick={() => handleChange("rating", value)}
-                      className={`px-4 py-2 cursor-pointer rounded-lg text-sm font-medium border transition-colors duration-150
+                      className={`px-4 py-2 cursor-pointer rounded-pill text-sm font-medium border transition-colors duration-150
                         ${
                           isSelected
-                            ? "bg-blue-600 text-white border-blue-600"
-                            : "bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600"
+                            ? "bg-accent text-accent-ink border-accent"
+                            : "bg-paper text-ink-2 border-rule hover:border-accent hover:text-accent"
                         }`}
                     >
-                      {value} — {label}
+                      <span className="font-outlier">{value}</span> — {label}
                     </button>
                   );
                 })}
               </div>
               {errors.rating && (
-                <p className="text-xs text-red-500">{errors.rating}</p>
+                <p className="text-xs text-negative">{errors.rating}</p>
               )}
             </div>
 
@@ -326,16 +328,16 @@ export default function SubmitFeedbackPage() {
                 type="checkbox"
                 checked={formData.anonymous}
                 onChange={(e) => handleChange("anonymous", e.target.checked)}
-                className="mt-0.5 w-4 h-4 accent-blue-600 cursor-pointer"
+                className="mt-0.5 w-4 h-4 accent-accent cursor-pointer"
               />
               <div>
                 <label
                   htmlFor="anonymous"
-                  className="text-sm font-medium text-gray-700 cursor-pointer"
+                  className="text-sm font-medium text-ink-2 cursor-pointer"
                 >
                   Submit anonymously
                 </label>
-                <p className="text-xs text-gray-400 mt-0.5">
+                <p className="text-xs text-muted mt-0.5">
                   Your identity will not be visible to administrators.
                 </p>
               </div>
@@ -344,8 +346,8 @@ export default function SubmitFeedbackPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white text-sm font-medium py-2.5 rounded-lg
-                hover:bg-blue-700 active:bg-blue-800 transition-colors duration-200
+              className="w-full bg-accent text-accent-ink text-sm font-medium py-2.5 rounded-pill
+                hover:opacity-90 active:opacity-80 transition-opacity duration-200
                 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-1"
             >
               {isSubmitting ? (

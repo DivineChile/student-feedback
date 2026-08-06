@@ -11,21 +11,21 @@ import { STATUSES } from "@/utils/status";
 
 function EmptyState() {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-14 text-center">
-      <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <ClipboardList size={22} className="text-gray-400" />
+    <div className="bg-paper border border-rule rounded-card px-6 py-14 text-center">
+      <div className="w-12 h-12 bg-paper-3 rounded-full flex items-center justify-center mx-auto mb-4">
+        <ClipboardList size={22} className="text-muted" />
       </div>
-      <h3 className="text-sm font-semibold text-gray-700 mb-1">
+      <h3 className="text-sm font-semibold text-ink-2 mb-1">
         No feedback submitted yet
       </h3>
-      <p className="text-sm text-gray-400 mb-5 max-w-xs mx-auto">
+      <p className="text-sm text-muted mb-5 max-w-xs mx-auto">
         You haven&apos;t submitted any feedback. Help improve your institution by
         sharing your experience.
       </p>
       <Link
         to="/dashboard/submit-feedback"
-        className="inline-block bg-blue-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg
-          hover:bg-blue-700 transition-colors duration-200"
+        className="inline-block bg-accent text-accent-ink text-sm font-medium px-5 py-2.5 rounded-pill
+          hover:opacity-90 transition-opacity duration-200"
       >
         Submit Feedback
       </Link>
@@ -35,8 +35,8 @@ function EmptyState() {
 
 function LoadingState() {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-14 text-center">
-      <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+    <div className="bg-paper border border-rule rounded-card px-6 py-14 text-center">
+      <div className="flex items-center justify-center gap-2 text-sm text-muted">
         <Loader2 size={16} className="animate-spin" />
         Loading your feedback...
       </div>
@@ -136,40 +136,42 @@ export default function MyFeedbackPage() {
     <main className="flex-1">
       <div className="flex flex-col gap-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">My Feedback</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="font-display font-semibold tracking-tight text-2xl text-ink">
+            My Feedback
+          </h2>
+          <p className="text-sm text-muted mt-1">
             Track the feedback you have submitted.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <SummaryCard label="Total Submitted" count={total} color="text-gray-900" />
-          <SummaryCard label="Pending" count={pending} color="text-yellow-600" />
-          <SummaryCard label="Resolved" count={resolved} color="text-green-600" />
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <SummaryCard label="Total Submitted" count={total} color="text-ink" featured />
+          <SummaryCard label="Pending" count={pending} color="text-pending" />
+          <SummaryCard label="Resolved" count={resolved} color="text-positive" />
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search
               size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
             />
             <input
               type="text"
               placeholder="Search by title or category..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white
-                text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2
-                focus:ring-blue-500 focus:border-transparent transition"
+              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-input border border-rule bg-paper
+                text-ink placeholder:text-muted focus:outline-none focus-visible:ring-2
+                focus-visible:ring-focus focus:border-transparent transition"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent transition"
           >
             {STATUSES.map(({ label, value }) => (
               <option key={value} value={value}>
@@ -181,8 +183,8 @@ export default function MyFeedbackPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent transition"
           >
             {CATEGORIES.map((category) => (
               <option key={category} value={category}>
@@ -198,14 +200,16 @@ export default function MyFeedbackPage() {
           <EmptyState />
         ) : (
           <div className="flex flex-col gap-4">
-            <p className="text-xs text-gray-400">
+            <p className="font-outlier text-xs text-muted">
               Showing {filteredItems.length} of {total} feedback
               {total !== 1 ? "s" : ""}
             </p>
 
-            {filteredItems.map((item) => (
-              <FeedbackCard key={item.id} item={item} />
-            ))}
+            <div className="bg-paper border border-rule rounded-card divide-y divide-rule">
+              {filteredItems.map((item) => (
+                <FeedbackCard key={item.id} item={item} />
+              ))}
+            </div>
           </div>
         )}
       </div>

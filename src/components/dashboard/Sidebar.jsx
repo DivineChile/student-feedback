@@ -24,18 +24,18 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-60 h-full bg-gray-900 flex flex-col">
+    <aside className="w-60 h-full bg-paper-2 border-r border-rule flex flex-col">
       {/* Logo */}
-      <div className="px-6 py-5 border-b border-gray-800">
+      <div className="px-6 py-5 border-b border-rule">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center shrink-0">
-            <span className="text-white font-bold text-xs">CV</span>
+          <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
+            <span className="text-accent-ink font-display font-semibold text-xs">CV</span>
           </div>
-          <span className="text-white font-semibold text-base">CampusVoice</span>
+          <span className="font-display font-semibold text-ink text-base">CampusVoice</span>
         </Link>
       </div>
 
-      {/* Nav Links */}
+      {/* Nav links */}
       <nav className="flex-1 px-3 py-5 flex flex-col gap-1">
         {navLinks.map(({ label, href, icon: Icon }) => {
           const isActive = pathname === href;
@@ -43,11 +43,11 @@ export default function Sidebar() {
             <Link
               key={label}
               to={href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-200
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm transition-colors duration-200
                 ${
                   isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                    ? "bg-accent text-accent-ink"
+                    : "text-ink-2 hover:bg-paper-3 hover:text-ink"
                 }`}
             >
               <Icon size={17} />
@@ -58,11 +58,11 @@ export default function Sidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="px-3 py-5 border-t border-gray-800">
+      <div className="px-3 py-5 border-t border-rule">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-lg text-sm
-            text-gray-400 hover:bg-gray-800 hover:text-white transition-colors duration-200"
+          className="w-full flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-pill text-sm
+            text-ink-2 hover:bg-paper-3 hover:text-ink transition-colors duration-200"
         >
           <LogOut size={17} />
           Logout

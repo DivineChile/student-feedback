@@ -150,33 +150,33 @@ function buildSentimentData(rows) {
       label: "Positive",
       value: counts.positive,
       percent: getPercent(counts.positive, total),
-      barClass: "bg-green-500",
-      textClass: "text-green-700",
-      bgClass: "bg-green-50",
+      barClass: "bg-positive",
+      textClass: "text-positive",
+      bgClass: "bg-positive-bg",
     },
     {
       label: "Neutral",
       value: counts.neutral,
       percent: getPercent(counts.neutral, total),
-      barClass: "bg-gray-500",
-      textClass: "text-gray-700",
-      bgClass: "bg-gray-100",
+      barClass: "bg-ink-2",
+      textClass: "text-ink-2",
+      bgClass: "bg-paper-3",
     },
     {
       label: "Negative",
       value: counts.negative,
       percent: getPercent(counts.negative, total),
-      barClass: "bg-red-500",
-      textClass: "text-red-700",
-      bgClass: "bg-red-50",
+      barClass: "bg-negative",
+      textClass: "text-negative",
+      bgClass: "bg-negative-bg",
     },
     {
       label: "Unprocessed",
       value: counts.unprocessed,
       percent: getPercent(counts.unprocessed, total),
-      barClass: "bg-slate-400",
-      textClass: "text-slate-700",
-      bgClass: "bg-slate-100",
+      barClass: "bg-rule-2",
+      textClass: "text-muted",
+      bgClass: "bg-paper-3",
     },
   ];
 }
@@ -247,12 +247,12 @@ export default function AdminAnalyticsPage() {
     return (
       <div className="flex flex-col gap-8">
         <section>
-          <h2 className="text-2xl font-bold text-gray-900">Analytics</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-display font-semibold text-ink">Analytics</h2>
+          <p className="text-sm text-muted mt-1">
             Understand trends, sentiment, and performance across institutional feedback.
           </p>
         </section>
-        <div className="flex items-center justify-center gap-2 text-sm text-gray-500 py-14">
+        <div className="flex items-center justify-center gap-2 text-sm text-muted py-14">
           <Loader2 size={16} className="animate-spin" />
           Loading analytics...
         </div>
@@ -264,8 +264,8 @@ export default function AdminAnalyticsPage() {
     return (
       <div className="flex flex-col gap-8">
         <section>
-          <h2 className="text-2xl font-bold text-gray-900">Analytics</h2>
-          <p className="text-sm text-red-500 mt-1">
+          <h2 className="text-2xl font-display font-semibold text-ink">Analytics</h2>
+          <p className="text-sm text-negative mt-1">
             Failed to load analytics data. Please try again.
           </p>
         </section>
@@ -315,8 +315,8 @@ export default function AdminAnalyticsPage() {
   return (
     <div className="flex flex-col gap-8 max-w-7xl">
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-1">Analytics</h2>
-        <p className="text-sm text-gray-500">
+        <h2 className="text-2xl font-display font-semibold text-ink mb-1">Analytics</h2>
+        <p className="text-sm text-muted">
           Understand trends, sentiment, and performance across institutional feedback.
         </p>
       </section>
@@ -325,29 +325,29 @@ export default function AdminAnalyticsPage() {
         <SummaryCard
           label="Total Feedback"
           value={totalFeedback}
-          icon={<MessageSquareText size={20} className="text-blue-600" />}
-          iconBg="bg-blue-50"
+          icon={<MessageSquareText size={20} className="text-ink-2" />}
+          iconBg="bg-paper-3"
         />
         <SummaryCard
           label="Negative Feedback"
           value={negativeFeedback}
-          valueColor="text-red-600"
-          icon={<ThumbsDown size={20} className="text-red-600" />}
-          iconBg="bg-red-50"
+          valueColor="text-negative"
+          icon={<ThumbsDown size={20} className="text-negative" />}
+          iconBg="bg-negative-bg"
         />
         <SummaryCard
           label="Resolved Feedback"
           value={resolvedFeedback}
-          valueColor="text-green-600"
-          icon={<CheckCheck size={20} className="text-green-600" />}
-          iconBg="bg-green-50"
+          valueColor="text-positive"
+          icon={<CheckCheck size={20} className="text-positive" />}
+          iconBg="bg-positive-bg"
         />
         <SummaryCard
           label="Average Rating"
           value={averageRating}
-          valueColor="text-orange-500"
-          icon={<Star size={20} className="text-orange-500" />}
-          iconBg="bg-orange-50"
+          valueColor="text-accent"
+          icon={<Star size={20} className="text-accent" />}
+          iconBg="bg-paper-3"
         />
       </section>
 
@@ -358,19 +358,19 @@ export default function AdminAnalyticsPage() {
         >
           <div className="flex flex-col gap-4">
             {categoryData.length === 0 ? (
-              <p className="text-sm text-gray-500">No category data available yet.</p>
+              <p className="text-sm text-muted">No category data available yet.</p>
             ) : (
               categoryData.map((item) => (
                 <div key={item.category} className="flex flex-col gap-1.5">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="text-sm font-medium text-gray-800">{item.category}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-sm font-medium text-ink-2">{item.category}</p>
+                    <p className="text-xs font-outlier text-muted">
                       {item.count} ({item.percent}%)
                     </p>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                  <div className="w-full h-2 rounded-full bg-paper-3 overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-blue-500"
+                      className="h-full rounded-full bg-accent"
                       style={{ width: `${item.percent}%` }}
                     />
                   </div>
@@ -388,21 +388,21 @@ export default function AdminAnalyticsPage() {
             {sentimentData.map((item) => (
               <div
                 key={item.label}
-                className={`rounded-xl border border-gray-200 p-4 ${item.bgClass}`}
+                className={`rounded-card border border-rule p-4 ${item.bgClass}`}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-medium text-gray-800">{item.label}</p>
-                  <p className={`text-sm font-semibold ${item.textClass}`}>
+                  <p className="text-sm font-medium text-ink-2">{item.label}</p>
+                  <p className={`text-sm font-outlier font-semibold ${item.textClass}`}>
                     {item.value}
                   </p>
                 </div>
-                <div className="mt-3 w-full h-2 rounded-full bg-white/70 overflow-hidden">
+                <div className="mt-3 w-full h-2 rounded-full bg-paper/70 overflow-hidden">
                   <div
                     className={`h-full rounded-full ${item.barClass}`}
                     style={{ width: `${item.percent}%` }}
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-2">{item.percent}% of total</p>
+                <p className="text-xs text-muted mt-2">{item.percent}% of total</p>
               </div>
             ))}
           </div>
@@ -415,11 +415,11 @@ export default function AdminAnalyticsPage() {
           subtitle="Track institutional response workflow"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-gray-200 p-4">
-              <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+            <div className="rounded-card border border-rule p-4">
+              <p className="text-xs uppercase tracking-wide text-muted font-medium">
                 Pending
               </p>
-              <p className="text-2xl font-bold text-yellow-600 mt-2">
+              <p className="text-2xl font-outlier font-semibold text-pending mt-2">
                 {statusData.pending}
               </p>
               <div className="mt-3">
@@ -427,11 +427,11 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-gray-200 p-4">
-              <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+            <div className="rounded-card border border-rule p-4">
+              <p className="text-xs uppercase tracking-wide text-muted font-medium">
                 Reviewed
               </p>
-              <p className="text-2xl font-bold text-blue-600 mt-2">
+              <p className="text-2xl font-outlier font-semibold text-reviewed mt-2">
                 {statusData.reviewed}
               </p>
               <div className="mt-3">
@@ -439,11 +439,11 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-gray-200 p-4">
-              <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+            <div className="rounded-card border border-rule p-4">
+              <p className="text-xs uppercase tracking-wide text-muted font-medium">
                 Resolved
               </p>
-              <p className="text-2xl font-bold text-green-600 mt-2">
+              <p className="text-2xl font-outlier font-semibold text-positive mt-2">
                 {statusData.resolved}
               </p>
               <div className="mt-3">
@@ -451,16 +451,16 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-gray-200 p-4">
-              <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+            <div className="rounded-card border border-rule p-4">
+              <p className="text-xs uppercase tracking-wide text-muted font-medium">
                 Resolution Rate
               </p>
-              <p className="text-2xl font-bold text-gray-900 mt-2">
+              <p className="text-2xl font-outlier font-semibold text-ink mt-2">
                 {statusData.resolutionRate}%
               </p>
-              <div className="mt-3 w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+              <div className="mt-3 w-full h-2 rounded-full bg-paper-3 overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-green-500"
+                  className="h-full rounded-full bg-positive"
                   style={{ width: `${statusData.resolutionRate}%` }}
                 />
               </div>
@@ -474,21 +474,21 @@ export default function AdminAnalyticsPage() {
         >
           <div className="flex items-end gap-3 h-56">
             {trendData.length === 0 ? (
-              <p className="text-sm text-gray-500">No trend data available yet.</p>
+              <p className="text-sm text-muted">No trend data available yet.</p>
             ) : (
               trendData.map((item) => (
                 <div key={item.label} className="flex-1 flex flex-col items-center gap-2">
-                  <div className="text-xs text-gray-500">{item.count}</div>
+                  <div className="text-xs font-outlier text-muted">{item.count}</div>
                   <div className="w-full flex items-end justify-center h-40">
                     <div
-                      className="w-full max-w-[36px] rounded-t-lg bg-blue-500"
+                      className="w-full max-w-[36px] rounded-t-lg bg-accent"
                       style={{
                         height: `${(item.count / maxTrendCount) * 100}%`,
                         minHeight: item.count > 0 ? "16px" : "0px",
                       }}
                     />
                   </div>
-                  <p className="text-[11px] text-gray-500 text-center">{item.label}</p>
+                  <p className="text-[11px] font-outlier text-muted text-center">{item.label}</p>
                 </div>
               ))
             )}
@@ -501,36 +501,36 @@ export default function AdminAnalyticsPage() {
         subtitle="Automatically summarized insights from feedback activity"
       >
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <div className="rounded-xl border border-gray-200 p-4 bg-slate-50">
+          <div className="rounded-card border border-rule p-4 bg-paper-2">
             <div className="flex items-center gap-2 mb-2">
-              <BarChart3 size={16} className="text-blue-600" />
-              <p className="text-sm font-semibold text-gray-900">Most Reported Category</p>
+              <BarChart3 size={16} className="text-accent" />
+              <p className="text-sm font-semibold text-ink">Most Reported Category</p>
             </div>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-ink-2">
               {topCategory}{" "}
-              <span className="text-gray-500">({topCount} submissions)</span>
+              <span className="text-muted font-outlier">({topCount} submissions)</span>
             </p>
           </div>
 
-          <div className="rounded-xl border border-gray-200 p-4 bg-slate-50">
+          <div className="rounded-card border border-rule p-4 bg-paper-2">
             <div className="flex items-center gap-2 mb-2">
-              <PieChart size={16} className="text-blue-600" />
-              <p className="text-sm font-semibold text-gray-900">Most Common Sentiment</p>
+              <PieChart size={16} className="text-accent" />
+              <p className="text-sm font-semibold text-ink">Most Common Sentiment</p>
             </div>
-            <p className="text-sm text-gray-700 capitalize">
+            <p className="text-sm text-ink-2 capitalize">
               {dominantSentiment}{" "}
-              <span className="text-gray-500">({dominantSentimentCount} entries)</span>
+              <span className="text-muted font-outlier">({dominantSentimentCount} entries)</span>
             </p>
           </div>
 
-          <div className="rounded-xl border border-gray-200 p-4 bg-slate-50">
+          <div className="rounded-card border border-rule p-4 bg-paper-2">
             <div className="flex items-center gap-2 mb-2">
-              <TrendingUp size={16} className="text-blue-600" />
-              <p className="text-sm font-semibold text-gray-900">Lowest Rated Category</p>
+              <TrendingUp size={16} className="text-accent" />
+              <p className="text-sm font-semibold text-ink">Lowest Rated Category</p>
             </div>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-ink-2">
               {lowestRatedCategory}{" "}
-              <span className="text-gray-500">
+              <span className="text-muted font-outlier">
                 ({lowestAverage ? lowestAverage.toFixed(1) : "0.0"}/5)
               </span>
             </p>

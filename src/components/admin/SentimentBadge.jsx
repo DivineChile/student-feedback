@@ -1,21 +1,21 @@
 export default function SentimentBadge({ sentiment }) {
   if (!sentiment) {
     return (
-      <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-200">
+      <span className="text-xs font-medium px-2.5 py-1 rounded-pill bg-paper-3 text-muted">
         Unprocessed
       </span>
     );
   }
 
   const styles = {
-    positive: "bg-green-50 text-green-700 border border-green-200",
-    neutral: "bg-gray-100 text-gray-700 border border-gray-200",
-    negative: "bg-red-50 text-red-700 border border-red-200",
+    positive: "bg-positive-bg text-positive",
+    neutral: "bg-paper-3 text-muted",
+    negative: "bg-negative-bg text-negative",
   };
 
   return (
     <span
-      className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${styles[sentiment]}`}
+      className={`text-xs font-medium px-2.5 py-1 rounded-pill capitalize ${styles[sentiment] || "bg-paper-3 text-muted"}`}
     >
       {sentiment}
     </span>

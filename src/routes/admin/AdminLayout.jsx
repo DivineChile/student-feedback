@@ -20,7 +20,7 @@ export default function AdminLayout() {
   const adminInitials = getInitials(adminName);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-paper">
       <div className="hidden md:block fixed top-0 left-0 h-screen w-64 z-40">
         <AdminSidebar />
       </div>

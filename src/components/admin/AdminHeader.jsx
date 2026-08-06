@@ -4,8 +4,6 @@ import { Menu, X, LogOut, LayoutDashboard, MessageSquareText, BarChart2, FileTex
 import { signOut } from "@/lib/auth";
 import { showToast } from "../ui/toast";
 
-// ── Route title config ────────────────────────
-
 const routeMeta = {
   "/admin": {
     title: "Admin Dashboard",
@@ -32,8 +30,6 @@ const navLinks = [
   { label: "Reports", href: "/admin/reports", icon: FileText },
 ];
 
-// ── Component ─────────────────────────────────
-
 export default function AdminHeader({ adminName, adminInitials }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -56,47 +52,39 @@ export default function AdminHeader({ adminName, adminInitials }) {
   };
 
   return (
-    <header className="sticky top-0 z-30 bg-slate-50 border-b border-slate-200">
-      {/* Main header row */}
+    <header className="sticky top-0 z-30 bg-paper border-b border-rule">
       <div className="flex items-center justify-between px-6 py-4">
-        {/* Left: Logo (mobile) + Page title */}
         <div className="flex items-center gap-3">
-          {/* Logo — mobile only */}
           <Link to="/admin" className="flex items-center gap-2 md:hidden">
-            <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center shrink-0">
-              <span className="text-white font-bold text-xs">CV</span>
+            <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
+              <span className="text-accent-ink font-display font-semibold text-xs">CV</span>
             </div>
           </Link>
 
-          {/* Dynamic title */}
           <div>
-            <h1 className="text-base font-semibold text-gray-900 leading-tight">{meta.title}</h1>
-            <p className="text-xs text-gray-500 hidden sm:block mt-0.5">{meta.subtitle}</p>
+            <h1 className="text-base font-semibold text-ink leading-tight">{meta.title}</h1>
+            <p className="text-xs text-muted hidden sm:block mt-0.5">{meta.subtitle}</p>
           </div>
         </div>
 
-        {/* Right: Admin profile + hamburger */}
         <div className="flex items-center gap-3">
-          {/* Admin profile — desktop only */}
           <div className="hidden md:flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center shrink-0">
-              <span className="text-white text-xs font-semibold">{adminInitials}</span>
+            <div className="w-8 h-8 rounded-full bg-ink flex items-center justify-center shrink-0">
+              <span className="text-paper text-xs font-semibold">{adminInitials}</span>
             </div>
             <div className="text-right">
-              <p className="text-sm font-medium text-gray-800 leading-tight">{adminName}</p>
-              <p className="text-xs text-gray-400">Administrator</p>
+              <p className="text-sm font-medium text-ink leading-tight">{adminName}</p>
+              <p className="text-xs text-muted">Administrator</p>
             </div>
           </div>
 
-          {/* Avatar only — mobile */}
-          <div className="flex md:hidden items-center justify-center w-8 h-8 rounded-full bg-slate-700 shrink-0">
-            <span className="text-white text-xs font-semibold">{adminInitials}</span>
+          <div className="flex md:hidden items-center justify-center w-8 h-8 rounded-full bg-ink shrink-0">
+            <span className="text-paper text-xs font-semibold">{adminInitials}</span>
           </div>
 
-          {/* Hamburger — mobile only */}
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="md:hidden p-2 text-gray-500 hover:text-gray-900 transition-colors"
+            className="md:hidden p-2 text-ink-2 hover:text-ink transition-colors"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -104,9 +92,8 @@ export default function AdminHeader({ adminName, adminInitials }) {
         </div>
       </div>
 
-      {/* Mobile dropdown */}
       {menuOpen && (
-        <nav className="md:hidden border-t border-slate-200 bg-slate-50 px-4 py-3 flex flex-col gap-1">
+        <nav className="md:hidden border-t border-rule bg-paper px-4 py-3 flex flex-col gap-1">
           {navLinks.map(({ label, href, icon: Icon }) => {
             const isActive = pathname === href;
             return (
@@ -114,11 +101,11 @@ export default function AdminHeader({ adminName, adminInitials }) {
                 key={label}
                 to={href}
                 onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm transition-colors
                   ${
                     isActive
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-600 hover:bg-slate-200 hover:text-gray-900"
+                      ? "bg-accent text-accent-ink"
+                      : "text-ink-2 hover:bg-paper-2 hover:text-ink"
                   }`}
               >
                 <Icon size={17} />
@@ -127,12 +114,11 @@ export default function AdminHeader({ adminName, adminInitials }) {
             );
           })}
 
-          {/* Logout */}
-          <div className="border-t border-slate-200 mt-2 pt-2">
+          <div className="border-t border-rule mt-2 pt-2">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm
-                text-gray-600 hover:bg-slate-200 hover:text-gray-900 transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm
+                text-ink-2 hover:bg-paper-2 hover:text-ink transition-colors"
             >
               <LogOut size={17} />
               Logout

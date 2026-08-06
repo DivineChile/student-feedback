@@ -15,6 +15,8 @@ import { SENTIMENTS } from "@/utils/sentiments";
 import { STATUSES } from "@/utils/status";
 import { formatDate } from "@/utils/formatDate";
 import SummaryCard from "@/components/admin/SummaryCard";
+import StatusBadge from "@/components/admin/StatusBadge";
+import SentimentBadge from "@/components/admin/SentimentBadge";
 
 function normalizeStudent(student) {
   if (!student) return null;
@@ -284,23 +286,23 @@ export default function AdminReportsPage() {
     <main className="flex-1">
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Reports</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-display font-semibold text-ink">Reports</h2>
+          <p className="text-sm text-muted mt-1">
             Generate and export institutional feedback summaries.
           </p>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <SummaryCard label="Filtered Feedback" value={totalCount} valueColor="" icon iconBg=""/>
-          <SummaryCard label="Pending" value={pendingCount} valueColor="text-yellow-600" icon iconBg=""/>
-          <SummaryCard label="Resolved" value={resolvedCount} valueColor="text-green-600" icon iconBg=""/>
-          <SummaryCard label="Average Rating" value={averageRating} valueColor="text-orange-500" icon iconBg=""/>
+          <SummaryCard label="Filtered Feedback" value={totalCount} />
+          <SummaryCard label="Pending" value={pendingCount} valueColor="text-pending" />
+          <SummaryCard label="Resolved" value={resolvedCount} valueColor="text-positive" />
+          <SummaryCard label="Average Rating" value={averageRating} valueColor="text-accent" />
         </div>
 
-        <section className="bg-white border border-gray-200 rounded-xl shadow-sm">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
-            <Filter size={16} className="text-gray-500" />
-            <h3 className="text-sm font-semibold text-gray-900">Report Filters</h3>
+        <section className="bg-paper border border-rule rounded-card">
+          <div className="px-6 py-4 border-b border-rule flex items-center gap-2">
+            <Filter size={16} className="text-muted" />
+            <h3 className="text-sm font-semibold text-ink">Report Filters</h3>
           </div>
 
           <div className="p-6 flex flex-col gap-4">
@@ -308,24 +310,24 @@ export default function AdminReportsPage() {
               <div className="relative xl:col-span-2">
                 <Search
                   size={15}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
                 />
                 <input
                   type="text"
                   placeholder="Search title, category, or comment..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white
-                    text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2
-                    focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full pl-9 pr-4 py-2.5 text-sm rounded-input border border-rule bg-paper
+                    text-ink placeholder-muted focus:outline-none focus:ring-2
+                    focus:ring-focus focus:border-transparent transition"
                 />
               </div>
 
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+                  focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
               >
                 {CATEGORIES.map((category) => (
                   <option key={category} value={category}>
@@ -337,8 +339,8 @@ export default function AdminReportsPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+                  focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
               >
                 {STATUSES.map(({ label, value }) => (
                   <option key={value} value={value}>
@@ -350,8 +352,8 @@ export default function AdminReportsPage() {
               <select
                 value={sentimentFilter}
                 onChange={(e) => setSentimentFilter(e.target.value)}
-                className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+                  focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
               >
                 {SENTIMENTS.map(({ label, value }) => (
                   <option key={value} value={value}>
@@ -363,45 +365,45 @@ export default function AdminReportsPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
               <div>
-                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+                <label className="block text-xs font-medium text-muted uppercase tracking-wide mb-1.5">
                   Start Date
                 </label>
                 <input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+                    focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+                <label className="block text-xs font-medium text-muted uppercase tracking-wide mb-1.5">
                   End Date
                 </label>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+                    focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
                 />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-white border border-gray-200 rounded-xl shadow-sm">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between gap-3">
+        <section className="bg-paper border border-rule rounded-card">
+          <div className="px-6 py-4 border-b border-rule flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <FileText size={16} className="text-gray-500" />
-              <h3 className="text-sm font-semibold text-gray-900">Report Preview</h3>
+              <FileText size={16} className="text-muted" />
+              <h3 className="text-sm font-semibold text-ink">Report Preview</h3>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={handleExportCsv}
-                className="inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-accent-ink text-sm font-medium px-4 py-2 rounded-pill hover:opacity-90 transition-opacity"
               >
                 <Download size={15} />
                 Export CSV
@@ -409,7 +411,7 @@ export default function AdminReportsPage() {
 
               <button
                 onClick={handleExportPdf}
-                className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center gap-2 border border-ink text-ink bg-transparent text-sm font-medium px-4 py-2 rounded-pill hover:bg-paper-3 transition-colors"
               >
                 <FileText size={15} />
                 Export PDF
@@ -419,113 +421,138 @@ export default function AdminReportsPage() {
 
           {isLoading ? (
             <div className="px-6 py-14 text-center">
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center justify-center gap-2 text-sm text-muted">
                 <Loader2 size={16} className="animate-spin" />
                 Loading report data...
               </div>
             </div>
           ) : filteredItems.length === 0 ? (
             <div className="px-6 py-14 text-center">
-              <p className="text-sm font-medium text-gray-600">No report data found</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-ink-2">No report data found</p>
+              <p className="text-xs text-muted mt-1">
                 Try adjusting your filters to preview report entries.
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[980px]">
-                <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Title
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Category
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Status
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Sentiment
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Rating
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Submission
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Student
-                    </th>
-                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-6 py-3">
-                      Date
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {filteredItems.slice(0, 20).map((item) => (
-                    <tr key={item.id} className="border-b border-gray-100 last:border-b-0">
-                      <td className="px-6 py-4">
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">{item.title}</p>
-                          <p className="text-xs text-gray-500 mt-1 line-clamp-2">
-                            {item.comment}
-                          </p>
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-4 text-sm text-gray-700">{item.category}</td>
-
-                      <td className="px-6 py-4">
-                        <span className="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 capitalize">
-                          {item.status}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-4">
-                        <span className="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 capitalize">
-                          {item.sentiment || "unprocessed"}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-4 text-sm text-gray-700">{item.rating}/5</td>
-
-                      <td className="px-6 py-4">
-                        <span
-                          className={`text-xs px-2.5 py-1 rounded-full ${
-                            item.isAnonymous
-                              ? "bg-purple-50 text-purple-600"
-                              : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {item.isAnonymous ? "Anonymous" : "Identified"}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-4 text-sm text-gray-700">
-                        {item.isAnonymous
-                          ? "Hidden"
-                          : item.studentName || item.studentEmail || "—"}
-                      </td>
-
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {formatDate(item.createdAt)}
-                      </td>
+            <>
+              {/* Desktop / tablet: spec-sheet table, scrolls horizontally within its own wrapper only */}
+              <div className="hidden sm:block overflow-x-auto">
+                <table className="w-full min-w-[980px]">
+                  <thead>
+                    <tr className="border-b border-rule bg-paper-2">
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Title
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Category
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Status
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Sentiment
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Rating
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Submission
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Student
+                      </th>
+                      <th className="text-left text-xs font-semibold text-muted uppercase tracking-wide px-6 py-3">
+                        Date
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+
+                  <tbody>
+                    {filteredItems.slice(0, 20).map((item) => (
+                      <tr key={item.id} className="border-b border-rule last:border-b-0">
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="text-sm font-medium text-ink">{item.title}</p>
+                            <p className="text-xs text-muted mt-1 line-clamp-2">
+                              {item.comment}
+                            </p>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4 text-sm text-ink-2">{item.category}</td>
+
+                        <td className="px-6 py-4">
+                          <StatusBadge status={item.status} />
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <SentimentBadge sentiment={item.sentiment} />
+                        </td>
+
+                        <td className="px-6 py-4 text-sm font-outlier text-ink-2">{item.rating}/5</td>
+
+                        <td className="px-6 py-4">
+                          <span
+                            className={`text-xs px-2.5 py-1 rounded-pill ${
+                              item.isAnonymous
+                                ? "bg-paper-3 text-ink-2"
+                                : "bg-paper-3 text-ink-2"
+                            }`}
+                          >
+                            {item.isAnonymous ? "Anonymous" : "Identified"}
+                          </span>
+                        </td>
+
+                        <td className="px-6 py-4 text-sm text-ink-2">
+                          {item.isAnonymous
+                            ? "Hidden"
+                            : item.studentName || item.studentEmail || "—"}
+                        </td>
+
+                        <td className="px-6 py-4 text-sm font-outlier text-muted">
+                          {formatDate(item.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile: stacked key/value rows instead of a cramped table */}
+              <div className="sm:hidden flex flex-col">
+                {filteredItems.slice(0, 20).map((item) => (
+                  <div key={item.id} className="px-6 py-4 border-b border-rule last:border-b-0 flex flex-col gap-2">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-sm font-medium text-ink">{item.title}</p>
+                      <span className="text-xs font-outlier text-muted shrink-0">
+                        {formatDate(item.createdAt)}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted line-clamp-2">{item.comment}</p>
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <StatusBadge status={item.status} />
+                      <SentimentBadge sentiment={item.sentiment} />
+                      <span className="text-xs font-outlier text-ink-2">{item.rating}/5</span>
+                      <span className="text-xs px-2.5 py-1 rounded-pill bg-paper-3 text-ink-2">
+                        {item.isAnonymous ? "Anonymous" : "Identified"}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted">
+                      {item.category} · {item.isAnonymous ? "Hidden" : item.studentName || item.studentEmail || "—"}
+                    </p>
+                  </div>
+                ))}
+              </div>
 
               {filteredItems.length > 20 && (
-                <div className="px-6 py-3 border-t border-gray-100 bg-gray-50">
-                  <p className="text-xs text-gray-500">
+                <div className="px-6 py-3 border-t border-rule bg-paper-2">
+                  <p className="text-xs text-muted">
                     Showing first 20 preview rows out of {filteredItems.length} filtered records.
                     The CSV and PDF exports include all filtered records.
                   </p>
                 </div>
               )}
-            </div>
+            </>
           )}
         </section>
       </div>

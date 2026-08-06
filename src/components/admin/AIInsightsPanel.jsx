@@ -36,19 +36,19 @@ export default function AIInsightsPanel({ stats, recentNegativeComments }) {
   };
 
   return (
-    <div className="rounded-xl border border-gray-200 p-4 bg-slate-50 md:col-span-2 xl:col-span-4 flex flex-col gap-4">
+    <div className="rounded-card border border-rule p-4 bg-paper-3 md:col-span-2 xl:col-span-4 flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <Sparkles size={16} className="text-blue-600" />
-          <p className="text-sm font-semibold text-gray-900">AI Insights</p>
+          <Sparkles size={16} className="text-accent" />
+          <p className="text-sm font-semibold text-ink">AI Insights</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => generate("insights")}
             disabled={loadingInsights}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-blue-200 bg-white text-blue-700
-              hover:bg-blue-50 transition-colors disabled:opacity-60 flex items-center gap-1.5"
+            className="px-3 py-1.5 text-xs font-medium rounded-pill border border-ink text-ink bg-transparent
+              hover:bg-paper-3 transition-colors disabled:opacity-60 flex items-center gap-1.5"
           >
             {loadingInsights && <Loader2 size={12} className="animate-spin" />}
             Generate AI Insights
@@ -57,8 +57,8 @@ export default function AIInsightsPanel({ stats, recentNegativeComments }) {
             type="button"
             onClick={() => generate("digest")}
             disabled={loadingDigest}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-blue-200 bg-white text-blue-700
-              hover:bg-blue-50 transition-colors disabled:opacity-60 flex items-center gap-1.5"
+            className="px-3 py-1.5 text-xs font-medium rounded-pill bg-accent text-accent-ink
+              hover:opacity-90 transition-opacity disabled:opacity-60 flex items-center gap-1.5"
           >
             {loadingDigest && <Loader2 size={12} className="animate-spin" />}
             Generate Weekly Digest
@@ -67,25 +67,25 @@ export default function AIInsightsPanel({ stats, recentNegativeComments }) {
       </div>
 
       {insights && (
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-700 mb-1.5">
+        <div className="bg-paper-2 border border-rule rounded-card p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-2 mb-1.5">
             Insights
           </p>
-          <p className="text-sm text-gray-700 leading-relaxed">{insights}</p>
+          <p className="text-sm text-ink-2 leading-relaxed">{insights}</p>
         </div>
       )}
 
       {digest && (
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-700 mb-1.5">
+        <div className="bg-paper-2 border border-rule rounded-card p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-2 mb-1.5">
             Weekly Digest
           </p>
-          <p className="text-sm text-gray-700 leading-relaxed">{digest}</p>
+          <p className="text-sm text-ink-2 leading-relaxed">{digest}</p>
         </div>
       )}
 
       {!insights && !digest && (
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-muted">
           Generate an AI-written summary of current trends, or a longer weekly digest for leadership.
         </p>
       )}

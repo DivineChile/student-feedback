@@ -17,14 +17,14 @@ import FeedbackManagementCard from "@/components/admin/FeedbackManagementCard";
 
 function EmptyState() {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-14 text-center">
-      <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <ClipboardList size={22} className="text-gray-400" />
+    <div className="bg-paper border border-rule rounded-card px-6 py-14 text-center">
+      <div className="w-12 h-12 bg-paper-3 rounded-full flex items-center justify-center mx-auto mb-4">
+        <ClipboardList size={22} className="text-muted" />
       </div>
-      <h3 className="text-sm font-semibold text-gray-700 mb-1">
+      <h3 className="text-sm font-semibold text-ink-2 mb-1">
         No feedback found
       </h3>
-      <p className="text-sm text-gray-400">
+      <p className="text-sm text-muted">
         Try adjusting your search or filters.
       </p>
     </div>
@@ -33,8 +33,8 @@ function EmptyState() {
 
 function LoadingState() {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-14 text-center">
-      <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+    <div className="bg-paper border border-rule rounded-card px-6 py-14 text-center">
+      <div className="flex items-center justify-center gap-2 text-sm text-muted">
         <Loader2 size={16} className="animate-spin" />
         Loading feedback...
       </div>
@@ -222,8 +222,8 @@ export default function AdminFeedbackPage() {
     <main className="flex-1">
       <div className="max-w-6xl mx-auto flex flex-col gap-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">All Feedback</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-display font-semibold text-ink">All Feedback</h2>
+          <p className="text-sm text-muted mt-1">
             Review, filter, and manage all student feedback submissions.
           </p>
         </div>
@@ -232,29 +232,29 @@ export default function AdminFeedbackPage() {
           <SummaryCard
             label="Total Feedback"
             value={totalCount}
-            icon={<MessageSquareText size={20} className="text-blue-600" />}
-            iconBg="bg-blue-50"
+            icon={<MessageSquareText size={20} className="text-ink-2" />}
+            iconBg="bg-paper-3"
           />
           <SummaryCard
             label="Pending"
             value={pendingCount}
-            valueColor="text-yellow-600"
-            icon={<Clock size={20} className="text-yellow-600" />}
-            iconBg="bg-yellow-50"
+            valueColor="text-pending"
+            icon={<Clock size={20} className="text-pending" />}
+            iconBg="bg-pending-bg"
           />
           <SummaryCard
             label="Reviewed"
             value={reviewedCount}
-            valueColor="text-blue-600"
-            icon={<MessageSquareText size={20} className="text-blue-600" />}
-            iconBg="bg-blue-50"
+            valueColor="text-reviewed"
+            icon={<MessageSquareText size={20} className="text-reviewed" />}
+            iconBg="bg-reviewed-bg"
           />
           <SummaryCard
             label="Resolved"
             value={resolvedCount}
-            valueColor="text-green-600"
-            icon={<CheckCheck size={20} className="text-green-600" />}
-            iconBg="bg-green-50"
+            valueColor="text-positive"
+            icon={<CheckCheck size={20} className="text-positive" />}
+            iconBg="bg-positive-bg"
           />
         </div>
 
@@ -262,24 +262,24 @@ export default function AdminFeedbackPage() {
           <div className="relative flex-1">
             <Search
               size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
             />
             <input
               type="text"
               placeholder="Search by title, category, or comment..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white
-                text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2
-                focus:ring-blue-500 focus:border-transparent transition"
+              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-input border border-rule bg-paper
+                text-ink placeholder-muted focus:outline-none focus:ring-2
+                focus:ring-focus focus:border-transparent transition"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+              focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
           >
             {STATUSES.map(({ label, value }) => (
               <option key={value} value={value}>
@@ -291,8 +291,8 @@ export default function AdminFeedbackPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+              focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
           >
             {CATEGORIES.map((category) => (
               <option key={category} value={category}>
@@ -304,8 +304,8 @@ export default function AdminFeedbackPage() {
           <select
             value={sentimentFilter}
             onChange={(e) => setSentimentFilter(e.target.value)}
-            className="px-4 py-2.5 text-sm rounded-lg border border-gray-200 bg-white text-gray-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="px-4 py-2.5 text-sm rounded-input border border-rule bg-paper text-ink-2
+              focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition"
           >
             {SENTIMENTS.map(({ label, value }) => (
               <option key={value} value={value}>
@@ -321,7 +321,7 @@ export default function AdminFeedbackPage() {
           <EmptyState />
         ) : (
           <div className="flex flex-col gap-4">
-            <p className="text-xs text-gray-400">
+            <p className="text-xs font-outlier text-muted">
               Showing {filteredItems.length} of {totalCount} feedback
               {totalCount !== 1 ? "s" : ""}
             </p>

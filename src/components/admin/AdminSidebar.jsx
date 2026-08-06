@@ -26,19 +26,19 @@ export default function AdminSidebar() {
   };
 
   return (
-    <aside className="w-64 h-full bg-white border-r border-gray-200 flex flex-col">
-      {/* Logo / Title area */}
-      <div className="px-6 py-5 border-b border-gray-200">
+    <aside className="w-64 h-full bg-paper-2 border-r border-rule flex flex-col">
+      {/* Logo / title area */}
+      <div className="px-6 py-5 border-b border-rule">
         <div className="flex items-center gap-2.5 mb-1">
-          <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center shrink-0">
-            <span className="text-white font-bold text-xs">CV</span>
+          <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
+            <span className="text-accent-ink font-display font-semibold text-xs">CV</span>
           </div>
-          <span className="font-semibold text-gray-900 text-base">Admin Panel</span>
+          <span className="font-display font-semibold text-ink text-base">Admin Panel</span>
         </div>
-        <p className="text-xs text-gray-400 pl-9">Institutional feedback management</p>
+        <p className="text-xs text-muted pl-9">Institutional feedback management</p>
       </div>
 
-      {/* Nav Links */}
+      {/* Nav links */}
       <nav className="flex-1 px-3 py-5 flex flex-col gap-1">
         {navLinks.map(({ label, href, icon: Icon }) => {
           const isActive = pathname === href;
@@ -46,11 +46,11 @@ export default function AdminSidebar() {
             <Link
               key={label}
               to={href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-200
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm transition-colors duration-200
                 ${
                   isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                    ? "bg-accent text-accent-ink"
+                    : "text-ink-2 hover:bg-paper-3 hover:text-ink"
                 }`}
             >
               <Icon size={17} />
@@ -61,11 +61,11 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="px-3 py-5 border-t border-gray-200">
+      <div className="px-3 py-5 border-t border-rule">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm
-            text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm
+            text-ink-2 hover:bg-paper-3 hover:text-ink transition-colors duration-200"
         >
           <LogOut size={17} />
           Logout

@@ -1,11 +1,14 @@
 export default function StatusBadge({ status }) {
   const styles = {
-    pending: "bg-yellow-50 text-yellow-700 border border-yellow-200",
-    reviewed: "bg-blue-50 text-blue-700 border border-blue-200",
-    resolved: "bg-green-50 text-green-700 border border-green-200",
+    pending: "bg-pending-bg text-pending",
+    reviewed: "bg-reviewed-bg text-reviewed",
+    resolved: "bg-positive-bg text-positive",
   };
+
   return (
-    <span className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${styles[status]}`}>
+    <span
+      className={`text-xs font-medium px-2.5 py-1 rounded-pill capitalize ${styles[status] || "bg-paper-3 text-muted"}`}
+    >
       {status}
     </span>
   );

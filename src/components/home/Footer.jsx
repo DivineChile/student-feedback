@@ -1,71 +1,34 @@
+import { Link } from "react-router-dom";
 import FadeInSection from "./FadeInSection";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-400 py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-ink px-4 sm:px-6 py-16 sm:py-20">
       <FadeInSection>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid sm:grid-cols-3 gap-8 mb-10">
+        <div className="max-w-6xl mx-auto grid gap-8">
+          <p className="font-display font-semibold text-paper text-display-s leading-[1.05] tracking-tight max-w-[28ch]">
+            Your voice belongs in the room where decisions get made.
+          </p>
 
-            {/* Brand */}
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">CV</span>
-                </div>
-                <span className="text-white font-semibold">CampusVoice</span>
+          <div className="flex flex-wrap items-baseline justify-between gap-4 pt-4 border-t border-white/15">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-accent rounded-[var(--radius-input)] flex items-center justify-center">
+                <span className="text-accent-ink font-display font-semibold text-[10px]">CV</span>
               </div>
-              <p className="text-sm leading-relaxed max-w-xs">
-                A secure, anonymous platform empowering students to shape the future of their institutions.
-              </p>
+              <span className="font-display font-medium text-paper text-sm">CampusVoice</span>
             </div>
 
-            {/* Platform links */}
-            <div>
-              <h4 className="text-white text-sm font-semibold mb-4">Platform</h4>
-              <ul className="space-y-2">
-                {[
-                  { label: "Features", href: "#features" },
-                  { label: "How It Works", href: "#how-it-works" },
-                  { label: "Security", href: "#security" },
-                ].map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-sm hover:text-white transition-colors duration-200"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            <div className="flex items-center gap-5 text-sm text-paper/60">
+              <Link to="/login" className="hover:text-paper transition-colors duration-200">
+                Login
+              </Link>
+              <Link to="/register" className="hover:text-paper transition-colors duration-200">
+                Register
+              </Link>
+              <span>&copy; {currentYear} CampusVoice</span>
             </div>
-
-            {/* Account links */}
-            <div>
-              <h4 className="text-white text-sm font-semibold mb-4">Account</h4>
-              <ul className="space-y-2">
-                {[
-                  { label: "Login", href: "/login" },
-                  { label: "Register", href: "/register" },
-                ].map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-sm hover:text-white transition-colors duration-200"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-          </div>
-          <div className="border-t border-gray-800 pt-6 text-xs text-center">
-            &copy; {currentYear} CampusVoice. All rights reserved.
           </div>
         </div>
       </FadeInSection>

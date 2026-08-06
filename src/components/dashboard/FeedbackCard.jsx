@@ -3,14 +3,14 @@ import { MessageSquareText } from "lucide-react";
 // Status Badge
 function StatusBadge({ status }) {
   const styles = {
-    pending: "bg-yellow-50 text-yellow-700 border border-yellow-200",
-    reviewed: "bg-blue-50 text-blue-700 border border-blue-200",
-    resolved: "bg-green-50 text-green-700 border border-green-200",
+    pending: "bg-pending-bg text-pending",
+    reviewed: "bg-reviewed-bg text-reviewed",
+    resolved: "bg-positive-bg text-positive",
   };
 
   return (
     <span
-      className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${styles[status]}`}
+      className={`text-xs font-medium px-2.5 py-1 rounded-pill capitalize ${styles[status]}`}
     >
       {status}
     </span>
@@ -21,21 +21,21 @@ function StatusBadge({ status }) {
 function SentimentBadge({ sentiment }) {
   if (!sentiment) {
     return (
-      <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-200">
+      <span className="text-xs font-medium px-2.5 py-1 rounded-pill bg-paper-3 text-muted">
         Unprocessed
       </span>
     );
   }
 
   const styles = {
-    positive: "bg-green-50 text-green-700 border border-green-200",
-    neutral: "bg-gray-100 text-gray-700 border border-gray-200",
-    negative: "bg-red-50 text-red-700 border border-red-200",
+    positive: "bg-positive-bg text-positive",
+    neutral: "bg-paper-3 text-muted",
+    negative: "bg-negative-bg text-negative",
   };
 
   return (
     <span
-      className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${styles[sentiment]}`}
+      className={`text-xs font-medium px-2.5 py-1 rounded-pill capitalize ${styles[sentiment]}`}
     >
       {sentiment}
     </span>
@@ -49,25 +49,20 @@ function RatingDots({ rating }) {
       {[1, 2, 3, 4, 5].map((i) => (
         <div
           key={i}
-          className={`w-2 h-2 rounded-full ${
-            i <= rating ? "bg-blue-500" : "bg-gray-200"
-          }`}
+          className={`w-2 h-2 rounded-full ${i <= rating ? "bg-accent" : "bg-paper-3"}`}
         />
       ))}
-      <span className="text-xs text-gray-400 ml-1">{rating}/5</span>
+      <span className="font-outlier text-xs text-muted ml-1">{rating}/5</span>
     </div>
   );
 }
 
 export default function FeedbackCard({ item }) {
   return (
-    <div
-      className="bg-white border border-gray-200 rounded-xl shadow-sm
-      hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 p-5 flex flex-col gap-4"
-    >
+    <div className="px-5 py-5 flex flex-col gap-4">
       {/* Top row: title + badges */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-        <h3 className="text-sm font-semibold text-gray-900 leading-snug">
+        <h3 className="text-sm font-semibold text-ink leading-snug">
           {item.title}
         </h3>
 
@@ -78,14 +73,14 @@ export default function FeedbackCard({ item }) {
       </div>
 
       {/* Comment preview */}
-      <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
+      <p className="text-sm text-ink-2 leading-relaxed line-clamp-3">
         {item.comment}
       </p>
 
       {/* Meta row */}
-      <div className="flex flex-wrap items-center gap-3 pt-1 border-t border-gray-100">
+      <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-rule">
         {/* Category */}
-        <span className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md">
+        <span className="text-xs bg-paper-3 text-ink-2 px-2.5 py-1 rounded-input">
           {item.category}
         </span>
 
@@ -94,17 +89,15 @@ export default function FeedbackCard({ item }) {
 
         {/* Anonymous */}
         <span
-          className={`text-xs px-2.5 py-1 rounded-md ${
-            item.isAnonymous
-              ? "bg-purple-50 text-purple-600"
-              : "bg-gray-100 text-gray-500"
+          className={`text-xs px-2.5 py-1 rounded-input bg-paper-3 ${
+            item.isAnonymous ? "text-accent" : "text-muted"
           }`}
         >
           {item.isAnonymous ? "Anonymous" : "Identified"}
         </span>
 
         {/* Date */}
-        <span className="text-xs text-gray-400 ml-auto">
+        <span className="font-outlier text-xs text-muted ml-auto">
           {new Date(item.createdAt).toLocaleDateString("en-GB", {
             day: "numeric",
             month: "short",
@@ -115,14 +108,14 @@ export default function FeedbackCard({ item }) {
 
       {/* System response */}
       {item.systemResponse && (
-        <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+        <div className="bg-paper-2 border border-rule rounded-card p-4">
           <div className="flex items-start gap-3">
-            <MessageSquareText size={16} className="text-blue-700 mt-0.5 shrink-0" />
+            <MessageSquareText size={16} className="text-accent mt-0.5 shrink-0" />
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-blue-700 mb-1">
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-2 mb-1">
                 System Response
               </p>
-              <p className="text-sm text-blue-900 leading-relaxed">
+              <p className="text-sm text-ink leading-relaxed">
                 {item.systemResponse}
               </p>
             </div>
@@ -132,14 +125,14 @@ export default function FeedbackCard({ item }) {
 
       {/* Admin reply */}
       {item.adminReply && (
-        <div className="bg-purple-50 border border-purple-100 rounded-lg p-4">
+        <div className="bg-paper-2 border border-rule rounded-card p-4">
           <div className="flex items-start gap-3">
-            <MessageSquareText size={16} className="text-purple-700 mt-0.5 shrink-0" />
+            <MessageSquareText size={16} className="text-reviewed mt-0.5 shrink-0" />
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-purple-700 mb-1">
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-2 mb-1">
                 Response from Administration
               </p>
-              <p className="text-sm text-purple-900 leading-relaxed">
+              <p className="text-sm text-ink leading-relaxed">
                 {item.adminReply}
               </p>
             </div>
