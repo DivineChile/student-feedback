@@ -59,6 +59,12 @@ flag-colours, in keeping with the restrained register. Use these, not raw Tailwi
 4-point named scale (`--spacing-3xs` … `--spacing-3xl`), values in `tokens.css`. Pages must
 use named tokens (`gap-md`, `p-lg`, or `var(--spacing-md)`), never raw rem/px values.
 
+**Width/max-width exception:** Tailwind v4 resolves `max-w-{name}`/`w-{name}` for
+xs/sm/md/lg/xl/2xl/3xl through this same spacing scale, so those specific size names produce
+tiny (gap-sized) widths, not real container widths. Use an explicit arbitrary value for layout
+width instead (`max-w-[30rem]`), never the named scale below `4xl`. `max-w-4xl` and above use a
+separate, unaffected scale and are safe as-is.
+
 ## Motion
 
 - Easings: `--ease-out` / `--ease-in` / `--ease-in-out`, named in `tokens.css`.

@@ -1,10 +1,18 @@
-/* Hallmark · design system · genre: modern-minimal · theme: Coral (custom-tuned)
- * Tailwind v4 @theme block — these variables are real CSS custom properties on :root
- * AND generate matching Tailwind utilities (bg-paper, text-ink, font-display, gap-md, …).
- * Reference by name everywhere. Never inline a raw oklch()/hex value in a component.
- */
+/* Hallmark design system. Tailwind v4 @theme block - these variables are real CSS
+   custom properties on :root AND generate matching Tailwind utilities (bg-paper,
+   text-ink, font-display, gap-md, etc). Reference by name everywhere - never inline
+   a raw oklch or hex value in a component.
+
+   Gotcha: Tailwind v4 resolves both max-w-NAME and w-NAME (NAME = xs, sm, md, lg,
+   xl, 2xl, 3xl) through this same spacing-NAME scale below (only 4xl and up use a
+   separate container-NAME scale that this file does not touch). Since the spacing
+   scale is tuned for gaps and padding, in the 0.25rem to 7rem range, those width
+   utilities silently resolve to tiny squished widths instead of real container
+   widths. Avoid max-w and w utilities named xs, sm, md, lg, xl, 2xl, 3xl for layout
+   width - use an explicit arbitrary value instead, such as max-w-[30rem]. max-w-4xl
+   and above are unaffected and safe to use normally. */
 @theme {
-  /* — Colour — */
+  /* Colour */
   --color-paper:      oklch(98% 0.004 60);
   --color-paper-2:    oklch(96% 0.006 55);
   --color-paper-3:    oklch(93% 0.008 50);
@@ -18,7 +26,7 @@
   --color-accent-ink:  oklch(99% 0.004 40);
   --color-focus:       oklch(62% 0.19 32);
 
-  /* Semantic status/sentiment — muted, not saturated flags */
+  /* Semantic status/sentiment colours - muted, not saturated flags */
   --color-positive:      oklch(62% 0.15 145);
   --color-positive-bg:   oklch(95% 0.03 145);
   --color-negative:      oklch(58% 0.20 25);
@@ -28,7 +36,7 @@
   --color-reviewed:      oklch(58% 0.12 250);
   --color-reviewed-bg:   oklch(95% 0.02 250);
 
-  /* — Type — */
+  /* Type */
   --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-body:    "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-outlier: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -42,7 +50,7 @@
   --text-display-s:  clamp(2rem, 4vw + 0.5rem, 3rem);
   --text-display:    clamp(2.5rem, 5vw + 0.5rem, 4.75rem);
 
-  /* — Space (4pt scale) — */
+  /* Space - 4pt scale */
   --spacing-3xs: 0.25rem;
   --spacing-2xs: 0.5rem;
   --spacing-xs:  0.75rem;
@@ -53,12 +61,12 @@
   --spacing-2xl: 4.5rem;
   --spacing-3xl: 7rem;
 
-  /* — Shape — */
+  /* Shape */
   --radius-card:  8px;
   --radius-pill:  999px;
   --radius-input: 8px;
 
-  /* — Motion — */
+  /* Motion */
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);

@@ -35,7 +35,7 @@ export default function Features() {
             <h2 className="font-display font-semibold text-ink text-display-s tracking-tight mb-3">
               Why Students Use CampusVoice
             </h2>
-            <p className="text-ink-2 max-w-2xl mx-auto text-base">
+            <p className="text-ink-2 max-w-[42rem] mx-auto text-base">
               Built to make student feedback effortless, safe, and impactful.
             </p>
           </div>
