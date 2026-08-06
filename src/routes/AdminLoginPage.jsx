@@ -4,7 +4,7 @@ import AdminLoginForm from "@/components/auth/AdminLoginForm";
 export default function AdminLoginPage() {
   return (
     <main className="min-h-screen bg-paper flex items-center justify-center px-4 py-10">
-      <div className="w-full">
+      <div className="w-full max-w-[30rem]">
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <Link to="/" className="flex items-center gap-2">
