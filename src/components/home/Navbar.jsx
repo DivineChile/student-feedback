@@ -26,7 +26,7 @@ export default function Navbar() {
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-[1fr_auto_1fr] items-center h-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex justify-between md:grid md:grid-cols-[1fr_auto_1fr] items-center h-16">
         {/* Brand — hard left */}
         <a href="#" className="justify-self-start flex items-center gap-2">
           <div className="w-8 h-8 bg-accent rounded-[var(--radius-input)] flex items-center justify-center">
