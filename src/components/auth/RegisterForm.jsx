@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { signUpStudent } from "@/lib/auth"
 import { showToast } from "../ui/toast"
 import { getAuthErrorMessage } from "@/lib/authErrors"
+import { isValidMatric, MATRIC_FORMAT_HINT } from "@/utils/matric"
 
 // --- Input Field Component ---
 function InputField({
@@ -58,14 +59,9 @@ function validateForm(data) {
 
   if (!data.matricNumber.trim()) {
     errors.matricNumber = "Matric number is required."
-  } else if (
-  !/^(20\d{2})\/(ND1|ND2|HND1|HND2)\/(COMP|PET|SLT|ISSET|BAM|ELECT)\/\d{3}$/.test(
-    data.matricNumber.trim()
-  )
-) {
-  errors.matricNumber =
-    "Matric number must follow format: 2024/HND2/COMP/003";
-}
+  } else if (!isValidMatric(data.matricNumber)) {
+    errors.matricNumber = `Matric number must follow format: ${MATRIC_FORMAT_HINT}`
+  }
 
   if (!data.email.trim()) {
     errors.email = "Email address is required."
@@ -140,6 +136,7 @@ export default function RegisterForm() {
       }, 1200)
 
     } catch (err) {
+     console.error("Registration failed:", err)
      const message = getAuthErrorMessage(err)
      showToast(message, "error")
     } finally {
@@ -162,7 +159,7 @@ export default function RegisterForm() {
       <InputField
         label="Matric Number"
         id="matricNumber"
-        placeholder="e.g. 2024/HND2/COMP/001"
+        placeholder={`e.g. ${MATRIC_FORMAT_HINT}`}
         value={formData.matricNumber}
         onChange={handleChange("matricNumber")}
         error={errors.matricNumber}

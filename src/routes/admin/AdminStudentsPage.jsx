@@ -4,20 +4,7 @@ import { createClient } from "@/lib/supabaseClient";
 import { showToast } from "@/components/ui/toast";
 import { formatDate } from "@/utils/formatDate";
 import SummaryCard from "@/components/admin/SummaryCard";
-
-const MATRIC_PATTERN =
-  /^(20\d{2})\/(ND1|ND2|HND1|HND2)\/(COMP|PET|SLT|ISSET|BAM|ELECT)\/(\d{3})$/;
-
-function parseMatric(matricNumber) {
-  const match = matricNumber?.match(MATRIC_PATTERN);
-
-  if (!match) {
-    return { admissionYear: "—", level: "—", department: "Unspecified" };
-  }
-
-  const [, year, level, department] = match;
-  return { admissionYear: year, level, department };
-}
+import { parseMatric } from "@/utils/matric";
 
 function getInitials(name) {
   return name
@@ -61,16 +48,16 @@ export default function AdminStudentsPage() {
         }
 
         const mapped = (profileRows || []).map((row) => {
-          const { admissionYear, level, department } = parseMatric(row.matric_number);
+          const parsed = parseMatric(row.matric_number);
 
           return {
             id: row.id,
             fullName: row.full_name || "Unnamed Student",
             matricNumber: row.matric_number || "—",
             email: row.email || "—",
-            department,
-            level,
-            admissionYear,
+            department: parsed.valid ? parsed.department : "Unspecified",
+            level: parsed.valid ? parsed.level : "—",
+            admissionYear: parsed.valid ? parsed.admissionYear : "—",
             createdAt: row.created_at,
             feedbackCount: feedbackCounts.get(row.id) || 0,
           };

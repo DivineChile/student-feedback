@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { getUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabaseClient";
 import { showToast } from "@/components/ui/toast";
+import { parseMatric } from "@/utils/matric";
 
 function InfoItem({ label, value, mono = false }) {
   return (
@@ -68,43 +69,6 @@ function getInitials(name) {
     .toUpperCase();
 }
 
-function parseMatricNumber(matricNumber) {
-  if (!matricNumber) {
-    return {
-      department: "—",
-      level: "—",
-      admissionYear: "—",
-    };
-  }
-
-  const parts = matricNumber.split("/");
-
-  if (parts.length !== 4) {
-    return {
-      department: "—",
-      level: "—",
-      admissionYear: "—",
-    };
-  }
-
-  const [year, level, departmentCode] = parts;
-
-  const departmentMap = {
-    COMP: "Computer Science",
-    PET: "Petroleum Marketing",
-    SLT: "Safety Lab and Technology",
-    ISSET: "Industrial Safety",
-    BAM: "Business Administration",
-    ELECT: "Electrical Electronics",
-  };
-
-  return {
-    department: departmentMap[departmentCode] || departmentCode,
-    level,
-    admissionYear: year,
-  };
-}
-
 export default function ProfilePage() {
   const supabase = createClient();
 
@@ -134,7 +98,7 @@ export default function ProfilePage() {
           throw error;
         }
 
-        const parsedMatric = parseMatricNumber(data?.matric_number || null);
+        const parsedMatric = parseMatric(data?.matric_number);
 
         const fullName = data?.full_name || "Student";
         const email = data?.email || user.email || "—";
@@ -143,9 +107,9 @@ export default function ProfilePage() {
           fullName,
           matricNumber: data?.matric_number || "—",
           email,
-          department: parsedMatric.department,
-          level: parsedMatric.level,
-          admissionYear: parsedMatric.admissionYear,
+          department: parsedMatric.valid ? parsedMatric.departmentName : "—",
+          level: parsedMatric.valid ? parsedMatric.level : "—",
+          admissionYear: parsedMatric.valid ? parsedMatric.admissionYear : "—",
           role: formatRole(data?.role || "student"),
           accountCreated: formatDate(data?.created_at || null),
           initials: getInitials(fullName),
