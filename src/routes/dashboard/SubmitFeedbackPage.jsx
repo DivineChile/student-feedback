@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabaseClient";
 import { showToast } from "@/components/ui/toast";
-import { processFeedback } from "@/lib/feedbackEngine";
+// import { processFeedback } from "@/lib/feedbackEngine";
 import { CATEGORIES } from "@/utils/categories";
 
 const RATINGS = [
@@ -104,7 +104,6 @@ export default function SubmitFeedbackPage() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [systemResponse, setSystemResponse] = useState("");
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -137,33 +136,33 @@ export default function SubmitFeedbackPage() {
       const trimmedComment = formData.comment.trim();
       const trimmedTitle = formData.title.trim();
 
-      let sentiment;
-      let confidence;
-      let score;
-      let systemResponse;
+      let sentiment = null;
+      let confidence = null;
 
+      // Sentiment analysis is for administrative analytics only.
+      // AI reply drafting happens separately in the admin dashboard.
       try {
-        const { data, error } = await supabase.functions.invoke("feedback-analyze", {
-          body: {
-            category: formData.category,
-            title: trimmedTitle,
-            comment: trimmedComment,
+        const { data, error: analysisError } = await supabase.functions.invoke(
+          "feedback-analyze",
+          {
+            body: {
+              category: formData.category,
+              title: trimmedTitle,
+              comment: trimmedComment,
+            },
           },
-        });
+        );
 
-        if (error) throw error;
+        if (analysisError) throw analysisError;
 
-        sentiment = data.sentiment;
-        confidence = data.confidence;
-        score = null;
-        systemResponse = data.systemResponse;
-      } catch (analyzeError) {
-        console.error("AI analysis unavailable, using local fallback:", analyzeError);
-        const fallback = processFeedback(formData.category, trimmedTitle, trimmedComment);
-        sentiment = fallback.sentiment;
-        confidence = fallback.confidence;
-        score = fallback.score;
-        systemResponse = fallback.systemResponse;
+        sentiment = data?.sentiment ?? null;
+        confidence = data?.confidence ?? null;
+      } catch (analysisError) {
+        // Analysis failure must not prevent feedback submission.
+        console.error(
+          "Sentiment analysis unavailable; feedback will still be submitted:",
+          analysisError,
+        );
       }
 
       const { error } = await supabase.from("feedback").insert({
@@ -175,21 +174,20 @@ export default function SubmitFeedbackPage() {
         is_anonymous: formData.anonymous,
         sentiment,
         sentiment_confidence: confidence,
-        sentiment_score: score,
-        system_response: systemResponse,
+        sentiment_score: null,
+        system_response: null,
       });
 
       if (error) {
         throw error;
       }
 
-      setSystemResponse(systemResponse);
       showToast("Feedback submitted successfully.", "success");
       setIsSuccess(true);
     } catch (error) {
       showToast(
         error?.message || "Failed to submit feedback. Please try again.",
-        "error"
+        "error",
       );
     } finally {
       setIsSubmitting(false);
@@ -205,7 +203,6 @@ export default function SubmitFeedbackPage() {
       anonymous: false,
     });
     setErrors({});
-    setSystemResponse("");
     setIsSuccess(false);
   };
 
@@ -221,14 +218,12 @@ export default function SubmitFeedbackPage() {
             Feedback Submitted
           </h2>
 
-          <div className="bg-paper-2 border border-rule rounded-card px-4 py-3 text-left mb-6">
+          {/* <div className="bg-paper-2 border border-rule rounded-card px-4 py-3 text-left mb-6">
             <p className="text-xs font-semibold text-ink-2 uppercase tracking-wide mb-1">
               System Response
             </p>
-            <p className="text-sm text-ink leading-relaxed">
-              {systemResponse}
-            </p>
-          </div>
+            <p className="text-sm text-ink leading-relaxed">{systemResponse}</p>
+          </div> */}
 
           <button
             onClick={handleReset}
@@ -255,7 +250,11 @@ export default function SubmitFeedbackPage() {
         </div>
 
         <div className="bg-paper border border-rule rounded-card p-6 md:p-8">
-          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            className="flex flex-col gap-5"
+          >
             <SelectField
               label="Category"
               id="category"
@@ -275,7 +274,10 @@ export default function SubmitFeedbackPage() {
             />
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="comment" className="text-sm font-medium text-ink-2">
+              <label
+                htmlFor="comment"
+                className="text-sm font-medium text-ink-2"
+              >
                 Comment
               </label>
               <textarea

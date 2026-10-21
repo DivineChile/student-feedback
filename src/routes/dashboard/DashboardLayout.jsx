@@ -16,7 +16,8 @@ function getInitials(name) {
 export default function DashboardLayout() {
   const { user, profile } = useAuth();
 
-  const studentName = profile?.full_name || user?.email?.split("@")[0] || "Student";
+  const studentName =
+    profile?.full_name || user?.email?.split("@")[0] || "Student";
   const studentInitials = getInitials(studentName);
 
   return (
@@ -26,7 +27,10 @@ export default function DashboardLayout() {
       </div>
 
       <div className="md:ml-60 flex flex-col min-h-screen">
-        <DashboardHeader studentName={studentName} studentInitials={studentInitials} />
+        <DashboardHeader
+          studentName={studentName}
+          studentInitials={studentInitials}
+        />
         <main className="flex-1 px-6 md:px-8 py-8 flex flex-col gap-8">
           <Outlet />
         </main>

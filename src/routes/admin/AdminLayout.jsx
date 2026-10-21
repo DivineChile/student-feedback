@@ -26,7 +26,11 @@ export default function AdminLayout() {
       </div>
 
       <div className="md:ml-64 flex flex-col min-h-screen">
-        <AdminHeader adminName={adminName} adminInitials={adminInitials} />
+        <AdminHeader
+          adminName={adminName}
+          adminInitials={adminInitials}
+          adminId={profile?.id}
+        />
         <main className="flex-1 px-6 md:px-8 py-8">
           <Outlet />
         </main>
