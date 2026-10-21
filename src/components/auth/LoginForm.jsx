@@ -34,7 +34,9 @@ function InputField({
             ${error ? "border-negative" : "border-rule"}`}
         />
         {rightElement && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2">{rightElement}</div>
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            {rightElement}
+          </div>
         )}
       </div>
       {error && <p className="text-xs text-negative">{error}</p>}
@@ -91,13 +93,16 @@ export default function LoginForm() {
 
     try {
       // Call supabase login with matricNumber as email mapping
-      const user = await signInStudent(formData.matricNumber, formData.password);
+      const user = await signInStudent(
+        formData.matricNumber,
+        formData.password,
+      );
 
       showToast("Login Successful!", "success");
 
       navigate("/dashboard", { replace: true });
     } catch (err) {
-      const message = getAuthErrorMessage(err)
+      const message = getAuthErrorMessage(err);
       showToast(message, "error");
     } finally {
       setIsLoading(false);
@@ -120,9 +125,9 @@ export default function LoginForm() {
           <label htmlFor="password" className="text-sm font-medium text-ink">
             Password
           </label>
-          <a href="#" className="text-xs text-accent hover:underline">
+          {/* <a href="#" className="text-xs text-accent hover:underline">
             Forgot password?
-          </a>
+          </a> */}
         </div>
         <div className="relative">
           <input
@@ -144,7 +149,9 @@ export default function LoginForm() {
             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
-        {errors.password && <p className="text-xs text-negative">{errors.password}</p>}
+        {errors.password && (
+          <p className="text-xs text-negative">{errors.password}</p>
+        )}
       </div>
 
       <button

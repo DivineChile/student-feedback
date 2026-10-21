@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import FadeInSection from "./FadeInSection";
 
 export default function CTA() {
@@ -9,16 +10,16 @@ export default function CTA() {
             Help Improve Your Institution
           </h2>
           <p className="text-ink-2 text-base mb-8 leading-relaxed max-w-[40rem] mx-auto">
-            Join students already making their campuses better — one piece
-            of anonymous feedback at a time.
+            Join students already making their campuses better — one piece of
+            anonymous feedback at a time.
           </p>
           <div className="flex justify-center">
-            <a
-              href="#"
+            <Link
+              to="/register"
               className="bg-accent text-accent-ink font-medium px-8 py-3 rounded-pill text-sm hover:opacity-90 transition-opacity duration-200"
             >
               Sign Up Free
-            </a>
+            </Link>
           </div>
         </div>
       </FadeInSection>
