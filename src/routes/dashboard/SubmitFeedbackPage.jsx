@@ -218,12 +218,15 @@ export default function SubmitFeedbackPage() {
             Feedback Submitted
           </h2>
 
-          {/* <div className="bg-paper-2 border border-rule rounded-card px-4 py-3 text-left mb-6">
+          <div className="bg-paper-2 border border-rule rounded-card px-4 py-3 text-left mb-6">
             <p className="text-xs font-semibold text-ink-2 uppercase tracking-wide mb-1">
-              System Response
+              Your Feedback has been Recieved!
             </p>
-            <p className="text-sm text-ink leading-relaxed">{systemResponse}</p>
-          </div> */}
+            <p className="text-sm text-ink leading-relaxed">
+              Your feedback has been successfully recorded and will be reviewed
+              shortly, please check back regularly for updates on this feedback.
+            </p>
+          </div>
 
           <button
             onClick={handleReset}
