@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import ProtectedRoute from "./routes/guards/ProtectedRoute";
 import AdminRoute from "./routes/guards/AdminRoute";
+import SuperAdminRoute from "./routes/guards/SuperAdminRoute";
 import RedirectIfAuthed from "./routes/guards/RedirectIfAuthed";
 
 import HomePage from "./routes/HomePage";
@@ -60,11 +61,19 @@ export const router = createBrowserRouter([
         path: "/admin",
         element: <AdminLayout />,
         children: [
-          { index: true, element: <AdminOverviewPage /> },
+          // Only the super-admin can access these pages.
+          {
+            element: <SuperAdminRoute />,
+            children: [
+              { index: true, element: <AdminOverviewPage /> },
+              { path: "analytics", element: <AdminAnalyticsPage /> },
+              { path: "reports", element: <AdminReportsPage /> },
+              { path: "students", element: <AdminStudentsPage /> },
+            ],
+          },
+
+          // Shared admin pages. Supabase RLS must restrict their data.
           { path: "feedback", element: <AdminFeedbackPage /> },
-          { path: "analytics", element: <AdminAnalyticsPage /> },
-          { path: "reports", element: <AdminReportsPage /> },
-          { path: "students", element: <AdminStudentsPage /> },
           { path: "notifications", element: <AdminNotificationsPage /> },
         ],
       },

@@ -17,7 +17,11 @@ export default function AdminRoute() {
 
   if (!user) return <Navigate to="/admin-login" replace />;
 
-  if (!profile || profile.role !== "admin") return <Navigate to="/dashboard" replace />;
+  const allowedRoles = ["admin", "sub_admin"];
+
+  if (!profile || !allowedRoles.includes(profile.role)) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return <Outlet />;
 }

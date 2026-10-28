@@ -1,5 +1,5 @@
 import { corsHeaders } from "../_shared/cors.ts";
-import { requireAdmin } from "../_shared/adminAuth.ts";
+import { requireAdminOrAssignedSubAdmin } from "../_shared/adminAuth.ts";
 import { generateText } from "../_shared/gemini.ts";
 
 function jsonResponse(body, status = 200) {
@@ -14,9 +14,10 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  const { supabase, isAdmin } = await requireAdmin(req);
+  const { supabase, role, officeName, authorized } =
+    await requireAdminOrAssignedSubAdmin(req);
 
-  if (!isAdmin) {
+  if (!authorized) {
     return jsonResponse({ error: "Forbidden" }, 403);
   }
 
@@ -37,10 +38,31 @@ Deno.serve(async (req) => {
     .from("feedback")
     .select("category, title, comment, sentiment, rating")
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if (error || !feedback) {
     return jsonResponse({ error: "Feedback not found" }, 404);
+  }
+
+  if (role === "sub_admin") {
+    if (feedback.category === "All") {
+      return jsonResponse({ error: "Forbidden" }, 403);
+    }
+
+    const { data: route, error: routeError } = await supabase
+      .from("feedback_category_routes")
+      .select("office_name")
+      .eq("category", feedback.category)
+      .maybeSingle();
+
+    if (
+      routeError ||
+      !route ||
+      !route.office_name ||
+      route.office_name !== officeName
+    ) {
+      return jsonResponse({ error: "Forbidden" }, 403);
+    }
   }
 
   const prompt = `A student submitted the following feedback to their institution.
@@ -69,6 +91,9 @@ Return only the reply text, nothing else.`;
     return jsonResponse({ draft: draft.trim() });
   } catch (error) {
     console.error("AI reply drafting failed:", error);
-    return jsonResponse({ error: "Failed to generate a draft reply. Please try again." }, 502);
+    return jsonResponse(
+      { error: "Failed to generate a draft reply. Please try again." },
+      502,
+    );
   }
 });

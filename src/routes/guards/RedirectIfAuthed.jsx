@@ -7,7 +7,11 @@ export default function RedirectIfAuthed() {
   if (loading) return null;
 
   if (user) {
-    return <Navigate to={profile?.role === "admin" ? "/admin" : "/dashboard"} replace />;
+    const isAdminRole = ["admin", "sub_admin"].includes(profile?.role);
+
+    return (
+      <Navigate to={isAdminRole ? "/admin/feedback" : "/dashboard"} replace />
+    );
   }
 
   return <Outlet />;

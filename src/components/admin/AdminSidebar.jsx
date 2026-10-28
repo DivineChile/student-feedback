@@ -1,9 +1,18 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, MessageSquareText, BarChart2, FileText, Users, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  MessageSquareText,
+  BarChart2,
+  FileText,
+  Users,
+  LogOut,
+  Bell,
+} from "lucide-react";
 import { signOut } from "@/lib/auth";
+import { useAuth } from "../../context/useAuth";
 import { showToast } from "../ui/toast";
 
-const navLinks = [
+const superAdminLinks = [
   { label: "Overview", href: "/admin", icon: LayoutDashboard },
   { label: "All Feedback", href: "/admin/feedback", icon: MessageSquareText },
   { label: "Analytics", href: "/admin/analytics", icon: BarChart2 },
@@ -11,9 +20,22 @@ const navLinks = [
   { label: "Students", href: "/admin/students", icon: Users },
 ];
 
+const subAdminLinks = [
+  {
+    label: "Assigned Feedback",
+    href: "/admin/feedback",
+    icon: MessageSquareText,
+  },
+  { label: "Notifications", href: "/admin/notifications", icon: Bell },
+];
+
 export default function AdminSidebar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const { profile } = useAuth();
+
+  const navLinks = profile?.role === "admin" ? superAdminLinks : subAdminLinks;
 
   const handleLogout = async () => {
     try {
@@ -31,11 +53,19 @@ export default function AdminSidebar() {
       <div className="px-6 py-5 border-b border-rule">
         <div className="flex items-center gap-2.5 mb-1">
           <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
-            <span className="text-accent-ink font-display font-semibold text-xs">CV</span>
+            <span className="text-accent-ink font-display font-semibold text-xs">
+              CV
+            </span>
           </div>
-          <span className="font-display font-semibold text-ink text-base">Admin Panel</span>
+          <span className="font-display font-semibold text-ink text-base">
+            {profile?.role === "admin" ? "Super Admin" : "Sub-admin"}
+          </span>
         </div>
-        <p className="text-xs text-muted pl-9">Institutional feedback management</p>
+        <p className="text-xs text-muted pl-9">
+          {profile?.role === "admin"
+            ? "Institutional feedback management"
+            : "Manage feedback assigned to your office"}
+        </p>
       </div>
 
       {/* Nav links */}

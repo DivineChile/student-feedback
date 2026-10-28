@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { useAuth } from "@/context/useAuth";
+import { createClient } from "../../lib/supabaseClient";
 
 function getInitials(name) {
   return name
@@ -15,6 +17,33 @@ function getInitials(name) {
 
 export default function AdminLayout() {
   const { profile } = useAuth();
+
+  const supabase = createClient();
+  const [officeName, setOfficeName] = useState(null);
+
+  useEffect(() => {
+    if (profile?.role !== "sub_admin" || !profile?.id) {
+      setOfficeName(null);
+      return;
+    }
+
+    const fetchOffice = async () => {
+      const { data, error } = await supabase
+        .from("sub_admin_assignments")
+        .select("office_name")
+        .eq("user_id", profile.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Failed to load assigned office:", error.message);
+        return;
+      }
+
+      setOfficeName(data?.office_name ?? null);
+    };
+
+    fetchOffice();
+  }, [profile?.id, profile?.role]);
 
   const adminName = profile?.full_name || "Administrator";
   const adminInitials = getInitials(adminName);
@@ -32,7 +61,7 @@ export default function AdminLayout() {
           adminId={profile?.id}
         />
         <main className="flex-1 px-6 md:px-8 py-8">
-          <Outlet />
+          <Outlet context={{ officeName }} />
         </main>
       </div>
     </div>

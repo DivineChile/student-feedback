@@ -8,6 +8,8 @@ import {
   Search,
 } from "lucide-react";
 import { createClient } from "@/lib/supabaseClient";
+import { useOutletContext } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
 import { showToast } from "@/components/ui/toast";
 import { CATEGORIES } from "@/utils/categories";
 import { STATUSES } from "@/utils/status";
@@ -79,6 +81,11 @@ export default function AdminFeedbackPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
 
+  const { officeName } = useOutletContext();
+  const { profile } = useAuth();
+
+  const isSubAdmin = profile?.role === "sub_admin";
+
   useEffect(() => {
     const fetchFeedback = async () => {
       setIsLoading(true);
@@ -102,7 +109,7 @@ export default function AdminFeedbackPage() {
               created_at,
               student_id,
               student:profiles!feedback_student_id_fkey(full_name,email)
-            `
+            `,
           )
           .order("created_at", { ascending: false });
 
@@ -113,7 +120,7 @@ export default function AdminFeedbackPage() {
       } catch (error) {
         showToast(
           error?.message || "Failed to load admin feedback data.",
-          "error"
+          "error",
         );
         setFeedbackItems([]);
       } finally {
@@ -141,16 +148,13 @@ export default function AdminFeedbackPage() {
 
       setFeedbackItems((prev) =>
         prev.map((item) =>
-          item.id === feedbackId ? { ...item, status: nextStatus } : item
-        )
+          item.id === feedbackId ? { ...item, status: nextStatus } : item,
+        ),
       );
 
       showToast("Feedback status updated successfully.", "success");
     } catch (error) {
-      showToast(
-        error?.message || "Failed to update feedback status.",
-        "error"
-      );
+      showToast(error?.message || "Failed to update feedback status.", "error");
     } finally {
       setUpdatingId(null);
     }
@@ -172,8 +176,8 @@ export default function AdminFeedbackPage() {
         prev.map((item) =>
           item.id === feedbackId
             ? { ...item, adminReply: replyText, adminReplyAt }
-            : item
-        )
+            : item,
+        ),
       );
 
       showToast("Reply saved successfully.", "success");
@@ -185,9 +189,15 @@ export default function AdminFeedbackPage() {
   };
 
   const totalCount = feedbackItems.length;
-  const pendingCount = feedbackItems.filter((item) => item.status === "pending").length;
-  const reviewedCount = feedbackItems.filter((item) => item.status === "reviewed").length;
-  const resolvedCount = feedbackItems.filter((item) => item.status === "resolved").length;
+  const pendingCount = feedbackItems.filter(
+    (item) => item.status === "pending",
+  ).length;
+  const reviewedCount = feedbackItems.filter(
+    (item) => item.status === "reviewed",
+  ).length;
+  const resolvedCount = feedbackItems.filter(
+    (item) => item.status === "resolved",
+  ).length;
 
   const filteredItems = useMemo(() => {
     return feedbackItems.filter((item) => {
@@ -210,10 +220,7 @@ export default function AdminFeedbackPage() {
         item.sentiment === sentimentFilter;
 
       return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesCategory &&
-        matchesSentiment
+        matchesSearch && matchesStatus && matchesCategory && matchesSentiment
       );
     });
   }, [feedbackItems, search, statusFilter, categoryFilter, sentimentFilter]);
@@ -222,9 +229,13 @@ export default function AdminFeedbackPage() {
     <main className="flex-1">
       <div className="max-w-6xl mx-auto flex flex-col gap-8">
         <div>
-          <h2 className="text-2xl font-display font-semibold text-ink">All Feedback</h2>
+          <h2 className="text-2xl font-display font-semibold text-ink">
+            All Feedback
+          </h2>
           <p className="text-sm text-muted mt-1">
-            Review, filter, and manage all student feedback submissions.
+            {isSubAdmin
+              ? `Review and manage feedback assigned to ${officeName || "your office"}.`
+              : "Review, filter, and manage student feedback submissions across the institution."}
           </p>
         </div>
 
