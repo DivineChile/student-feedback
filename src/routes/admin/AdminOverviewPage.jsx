@@ -49,7 +49,9 @@ export default function AdminOverviewPage() {
       try {
         const { data, error } = await supabase
           .from("feedback")
-          .select("id, title, category, comment, status, created_at, sentiment, rating")
+          .select(
+            "id, title, category, comment, status, created_at, sentiment, rating",
+          )
           .order("created_at", { ascending: false });
 
         if (error) throw error;
@@ -72,9 +74,12 @@ export default function AdminOverviewPage() {
     return (
       <div className="flex flex-col gap-8 max-w-6xl">
         <section>
-          <h2 className="text-2xl font-display font-semibold text-ink mb-1">Welcome back</h2>
+          <h2 className="text-2xl font-display font-semibold text-ink mb-1">
+            Welcome back
+          </h2>
           <p className="text-sm text-muted">
-            Monitor feedback activity, review student concerns, and track institutional response.
+            Monitor feedback activity, review student concerns, and track
+            institutional response.
           </p>
         </section>
         <div className="flex items-center justify-center gap-2 text-sm text-muted py-14">
@@ -89,7 +94,9 @@ export default function AdminOverviewPage() {
     return (
       <div className="flex flex-col gap-8 max-w-6xl">
         <section>
-          <h2 className="text-2xl font-display font-semibold text-ink mb-1">Welcome back</h2>
+          <h2 className="text-2xl font-display font-semibold text-ink mb-1">
+            Welcome back
+          </h2>
           <p className="text-sm text-negative">
             Failed to load dashboard data. Please try again.
           </p>
@@ -99,16 +106,22 @@ export default function AdminOverviewPage() {
   }
 
   const totalFeedback = feedbackRows.length;
-  const pendingCount = feedbackRows.filter((item) => item.status === "pending").length;
-  const reviewedCount = feedbackRows.filter((item) => item.status === "reviewed").length;
-  const resolvedCount = feedbackRows.filter((item) => item.status === "resolved").length;
+  const pendingCount = feedbackRows.filter(
+    (item) => item.status === "pending",
+  ).length;
+  const reviewedCount = feedbackRows.filter(
+    (item) => item.status === "reviewed",
+  ).length;
+  const resolvedCount = feedbackRows.filter(
+    (item) => item.status === "resolved",
+  ).length;
 
   const positiveSentimentCount = feedbackRows.filter(
-    (item) => item.sentiment === "positive"
+    (item) => item.sentiment === "positive",
   ).length;
 
   const negativeSentimentCount = feedbackRows.filter(
-    (item) => item.sentiment === "negative"
+    (item) => item.sentiment === "negative",
   ).length;
 
   const averageRating = calculateAverageRating(feedbackRows);
@@ -125,9 +138,12 @@ export default function AdminOverviewPage() {
   return (
     <div className="flex flex-col gap-8 max-w-6xl">
       <section>
-        <h2 className="text-2xl font-display font-semibold text-ink mb-1">Welcome back</h2>
+        <h2 className="text-2xl font-display font-semibold text-ink mb-1">
+          Welcome back
+        </h2>
         <p className="text-sm text-muted">
-          Monitor feedback activity, review student concerns, and track institutional response.
+          Monitor feedback activity, review student concerns, and track
+          institutional response.
         </p>
       </section>
 
@@ -199,10 +215,12 @@ export default function AdminOverviewPage() {
       </section>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        <section className="lg:col-span-2">
+        <section className="col-span-1 lg:col-span-2">
           <div className="bg-paper border border-rule rounded-card">
             <div className="flex items-center justify-between px-6 py-4 border-b border-rule">
-              <h3 className="text-sm font-semibold text-ink">Recent Feedback</h3>
+              <h3 className="text-sm font-semibold text-ink">
+                Recent Feedback
+              </h3>
               <Link
                 to="/admin/feedback"
                 className="text-xs text-accent hover:opacity-80 font-medium transition-opacity"

@@ -23,14 +23,28 @@ export default function FeedbackManagementCard({
     setIsDrafting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke("admin-draft-reply", {
-        body: { id: item.id },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "admin-draft-reply",
+        {
+          body: { id: item.id },
+        },
+      );
 
       if (error) throw error;
 
       setReplyText(data.draft);
-    } catch {
+    } catch (error) {
+      console.error("AI draft generation failed:", error);
+
+      if (error?.context instanceof Response) {
+        const responseBody = await error.context
+          .clone()
+          .text()
+          .catch(() => "");
+
+        console.error("AI draft HTTP status:", error.context.status);
+        console.error("AI draft response body:", responseBody);
+      }
       showToast("Failed to generate an AI draft. Please try again.", "error");
     } finally {
       setIsDrafting(false);
@@ -77,7 +91,10 @@ export default function FeedbackManagementCard({
       {item.systemResponse && (
         <div className="bg-paper-2 border border-rule rounded-card p-4">
           <div className="flex items-start gap-3">
-            <MessageSquareText size={16} className="text-ink-2 mt-0.5 shrink-0" />
+            <MessageSquareText
+              size={16}
+              className="text-ink-2 mt-0.5 shrink-0"
+            />
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-2 mb-1">
                 System Response
@@ -133,7 +150,11 @@ export default function FeedbackManagementCard({
           <button
             type="button"
             onClick={() => onReplySave(item.id, replyText.trim())}
-            disabled={isUpdating || !replyText.trim() || replyText.trim() === (item.adminReply || "")}
+            disabled={
+              isUpdating ||
+              !replyText.trim() ||
+              replyText.trim() === (item.adminReply || "")
+            }
             className="px-4 py-1.5 text-xs font-medium rounded-pill bg-accent text-accent-ink
               hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >

@@ -9,6 +9,8 @@ import HomePage from "./routes/HomePage";
 import LoginPage from "./routes/LoginPage";
 import RegisterPage from "./routes/RegisterPage";
 import AdminLoginPage from "./routes/AdminLoginPage";
+import ChangePasswordPage from "./routes/ChangePasswordPage";
+import AccountDisabledPage from "./routes/AccountDisabledPage";
 
 import DashboardLayout from "./routes/dashboard/DashboardLayout";
 import DashboardHome from "./routes/dashboard/DashboardHome";
@@ -22,6 +24,7 @@ import AdminFeedbackPage from "./routes/admin/AdminFeedbackPage";
 import AdminAnalyticsPage from "./routes/admin/AdminAnalyticsPage";
 import AdminReportsPage from "./routes/admin/AdminReportsPage";
 import AdminStudentsPage from "./routes/admin/AdminStudentsPage";
+import AdminSubAdminsPage from "./routes/admin/AdminSubAdminsPage";
 import AdminNotificationsPage from "./routes/admin/AdminNotificationsPage";
 import StudentNotificationsPage from "./routes/dashboard/NotificationPage";
 
@@ -36,6 +39,9 @@ export const router = createBrowserRouter([
       { path: "/admin-login", element: <AdminLoginPage /> },
     ],
   },
+
+  { path: "/change-password", element: <ChangePasswordPage /> },
+  { path: "/account-disabled", element: <AccountDisabledPage /> },
 
   {
     element: <ProtectedRoute />,
@@ -69,6 +75,7 @@ export const router = createBrowserRouter([
               { path: "analytics", element: <AdminAnalyticsPage /> },
               { path: "reports", element: <AdminReportsPage /> },
               { path: "students", element: <AdminStudentsPage /> },
+              { path: "sub-admins", element: <AdminSubAdminsPage /> },
             ],
           },
 

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import { useAuth } from "@/context/useAuth";
+import { useAuth } from "../../context/useAuth";
 
 function FullScreenSpinner() {
   return (
@@ -15,12 +15,22 @@ export default function AdminRoute() {
 
   if (loading) return <FullScreenSpinner />;
 
-  if (!user) return <Navigate to="/admin-login" replace />;
+  if (!user) {
+    return <Navigate to="/admin-login" replace />;
+  }
 
   const allowedRoles = ["admin", "sub_admin"];
 
   if (!profile || !allowedRoles.includes(profile.role)) {
     return <Navigate to="/dashboard" replace />;
+  }
+
+  if (profile.is_active === false) {
+    return <Navigate to="/admin-login" replace />;
+  }
+
+  if (profile.must_change_password) {
+    return <Navigate to="/change-password" replace />;
   }
 
   return <Outlet />;

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import { useAuth } from "@/context/useAuth";
+import { useAuth } from "../../context/useAuth";
 
 function FullScreenSpinner() {
   return (
@@ -11,11 +11,25 @@ function FullScreenSpinner() {
 }
 
 export default function ProtectedRoute() {
-  const { user, loading } = useAuth();
+  const { user, profile, loading } = useAuth();
 
   if (loading) return <FullScreenSpinner />;
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!profile) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (profile.is_active === false) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (profile.must_change_password) {
+    return <Navigate to="/change-password" replace />;
+  }
 
   return <Outlet />;
 }

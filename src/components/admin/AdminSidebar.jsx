@@ -7,6 +7,7 @@ import {
   Users,
   LogOut,
   Bell,
+  ShieldCheck,
 } from "lucide-react";
 import { signOut } from "@/lib/auth";
 import { useAuth } from "../../context/useAuth";
@@ -18,6 +19,7 @@ const superAdminLinks = [
   { label: "Analytics", href: "/admin/analytics", icon: BarChart2 },
   { label: "Reports", href: "/admin/reports", icon: FileText },
   { label: "Students", href: "/admin/students", icon: Users },
+  { label: "Sub Admins", href: "/admin/sub-admins", icon: ShieldCheck },
 ];
 
 const subAdminLinks = [

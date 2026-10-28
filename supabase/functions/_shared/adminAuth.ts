@@ -1,18 +1,20 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
-export function getSupabaseForRequest(req) {
+export function getSupabaseForRequest(req: Request) {
   const authHeader = req.headers.get("Authorization") || "";
 
   return createClient(
-    Deno.env.get("SUPABASE_URL"),
-    Deno.env.get("SUPABASE_ANON_KEY"),
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_ANON_KEY")!,
     {
-      global: { headers: { Authorization: authHeader } },
+      global: {
+        headers: { Authorization: authHeader },
+      },
     },
   );
 }
 
-export async function requireAdmin(req) {
+export async function requireAdmin(req: Request) {
   const supabase = getSupabaseForRequest(req);
 
   const {
@@ -26,18 +28,24 @@ export async function requireAdmin(req) {
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("role")
+    .select("role, is_active, must_change_password")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
-  if (profileError || !profile || profile.role !== "admin") {
+  if (
+    profileError ||
+    !profile ||
+    profile.role !== "admin" ||
+    profile.is_active !== true ||
+    profile.must_change_password === true
+  ) {
     return { supabase, user, isAdmin: false };
   }
 
   return { supabase, user, isAdmin: true };
 }
 
-export async function requireAdminOrAssignedSubAdmin(req) {
+export async function requireAdminOrAssignedSubAdmin(req: Request) {
   const supabase = getSupabaseForRequest(req);
 
   const {
@@ -57,15 +65,20 @@ export async function requireAdminOrAssignedSubAdmin(req) {
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("role")
+    .select("role, is_active, must_change_password")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
-  if (profileError || !profile) {
+  if (
+    profileError ||
+    !profile ||
+    profile.is_active !== true ||
+    profile.must_change_password === true
+  ) {
     return {
       supabase,
       user,
-      role: null,
+      role: profile?.role ?? null,
       officeName: null,
       authorized: false,
     };

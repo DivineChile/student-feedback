@@ -9,11 +9,13 @@ import {
   BarChart2,
   FileText,
   Bell,
+  ShieldCheck,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { createClient } from "@/lib/supabaseClient";
 import { signOut } from "@/lib/auth";
 import { showToast } from "../ui/toast";
+import { useAuth } from "../../context/useAuth";
 
 const routeMeta = {
   "/admin": {
@@ -44,6 +46,7 @@ const navLinks = [
   { label: "Analytics", href: "/admin/analytics", icon: BarChart2 },
   { label: "Reports", href: "/admin/reports", icon: FileText },
   { label: "Notifications", href: "/admin/notifications", icon: Bell },
+  { label: "Sub Admins", href: "/admin/sub-admins", icon: ShieldCheck },
 ];
 
 export default function AdminHeader({ adminName, adminInitials, adminId }) {
@@ -52,6 +55,9 @@ export default function AdminHeader({ adminName, adminInitials, adminId }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+
+  const { profile } = useAuth();
+  const isSuperAdmin = profile?.role === "admin";
 
   useEffect(() => {
     if (!adminId) return undefined;
@@ -156,7 +162,10 @@ export default function AdminHeader({ adminName, adminInitials, adminId }) {
     <header className="sticky top-0 z-30 bg-paper border-b border-rule">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-3">
-          <Link to="/admin" className="flex items-center gap-2 md:hidden">
+          <Link
+            to={isSuperAdmin ? "/admin" : "/admin/feedback"}
+            className="flex items-center gap-2 md:hidden"
+          >
             <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
               <span className="text-accent-ink font-display font-semibold text-xs">
                 CV
@@ -221,22 +230,33 @@ export default function AdminHeader({ adminName, adminInitials, adminId }) {
 
       {menuOpen && (
         <nav className="md:hidden border-t border-rule bg-paper px-4 py-3 flex flex-col gap-1">
-          {navLinks.map(({ label, href, icon: Icon }) => {
+          {(isSuperAdmin
+            ? navLinks
+            : navLinks.filter(({ href }) =>
+                ["/admin/feedback", "/admin/notifications"].includes(href),
+              )
+          ).map(({ label, href, icon: Icon }) => {
             const isActive = pathname === href;
+
+            const displayLabel =
+              !isSuperAdmin && href === "/admin/feedback"
+                ? "Assigned Feedback"
+                : label;
+
             return (
               <Link
-                key={label}
+                key={href}
                 to={href}
                 onClick={() => setMenuOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-pill text-sm transition-colors
-                  ${
-                    isActive
-                      ? "bg-accent text-accent-ink"
-                      : "text-ink-2 hover:bg-paper-2 hover:text-ink"
-                  }`}
+        ${
+          isActive
+            ? "bg-accent text-accent-ink"
+            : "text-ink-2 hover:bg-paper-2 hover:text-ink"
+        }`}
               >
                 <Icon size={17} />
-                {label}
+                {displayLabel}
               </Link>
             );
           })}
