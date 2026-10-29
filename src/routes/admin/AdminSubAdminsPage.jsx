@@ -18,6 +18,7 @@ const OFFICES = [
   "Dean of Student Affairs",
   "Security Office",
   "Administration Office",
+  "Head of Department",
 ];
 
 export default function AdminSubAdminsPage() {
