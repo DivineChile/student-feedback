@@ -33,7 +33,7 @@ export default function Features() {
         <FadeInSection>
           <div className="text-center mb-14">
             <h2 className="font-display font-semibold text-ink text-display-s tracking-tight mb-3">
-              Why Students Use CampusVoice
+              Why Students Use Student Feedback
             </h2>
             <p className="text-ink-2 max-w-[42rem] mx-auto text-base">
               Built to make student feedback effortless, safe, and impactful.

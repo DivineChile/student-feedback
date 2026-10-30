@@ -1,11 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  Download,
-  FileText,
-  Filter,
-  Loader2,
-  Search,
-} from "lucide-react";
+import { Download, FileText, Filter, Loader2, Search } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { createClient } from "@/lib/supabaseClient";
@@ -87,7 +81,7 @@ export default function AdminReportsPage() {
   const [sentimentFilter, setSentimentFilter] = useState("all");
 
   const [startDate, setStartDate] = useState(
-    toInputDate(new Date(new Date().setMonth(new Date().getMonth() - 1)))
+    toInputDate(new Date(new Date().setMonth(new Date().getMonth() - 1))),
   );
   const [endDate, setEndDate] = useState(toInputDate(new Date()));
 
@@ -98,7 +92,8 @@ export default function AdminReportsPage() {
       try {
         const { data, error } = await supabase
           .from("feedback")
-          .select(`
+          .select(
+            `
             id,
             title,
             category,
@@ -110,7 +105,8 @@ export default function AdminReportsPage() {
             is_anonymous,
             created_at,
             student:profiles!feedback_student_id_fkey(full_name,email)
-          `)
+          `,
+          )
           .order("created_at", { ascending: false });
 
         if (error) throw error;
@@ -118,10 +114,7 @@ export default function AdminReportsPage() {
         const mapped = (data || []).map(mapFeedbackRow);
         setItems(mapped);
       } catch (error) {
-        showToast(
-          error?.message || "Failed to load reports data.",
-          "error"
-        );
+        showToast(error?.message || "Failed to load reports data.", "error");
         setItems([]);
       } finally {
         setIsLoading(false);
@@ -175,8 +168,12 @@ export default function AdminReportsPage() {
   ]);
 
   const totalCount = filteredItems.length;
-  const pendingCount = filteredItems.filter((item) => item.status === "pending").length;
-  const resolvedCount = filteredItems.filter((item) => item.status === "resolved").length;
+  const pendingCount = filteredItems.filter(
+    (item) => item.status === "pending",
+  ).length;
+  const resolvedCount = filteredItems.filter(
+    (item) => item.status === "resolved",
+  ).length;
   const averageRating = calculateAverageRating(filteredItems);
 
   const handleExportCsv = () => {
@@ -233,11 +230,12 @@ export default function AdminReportsPage() {
       categoryFilter !== "all" && `Category: ${categoryFilter}`,
       statusFilter !== "all" && `Status: ${statusFilter}`,
       sentimentFilter !== "all" && `Sentiment: ${sentimentFilter}`,
-      (startDate || endDate) && `Date: ${startDate || "…"} to ${endDate || "…"}`,
+      (startDate || endDate) &&
+        `Date: ${startDate || "…"} to ${endDate || "…"}`,
     ].filter(Boolean);
 
     doc.setFontSize(16);
-    doc.text("CampusVoice Feedback Report", 14, 16);
+    doc.text("FPOG Student Feedback Management System Report", 14, 16);
 
     doc.setFontSize(9);
     doc.setTextColor(100);
@@ -245,7 +243,7 @@ export default function AdminReportsPage() {
     doc.text(
       activeFilters.length ? activeFilters.join("  |  ") : "No filters applied",
       14,
-      27
+      27,
     );
 
     doc.setFontSize(10);
@@ -253,13 +251,23 @@ export default function AdminReportsPage() {
     doc.text(
       `Filtered Feedback: ${totalCount}   Pending: ${pendingCount}   Resolved: ${resolvedCount}   Average Rating: ${averageRating}`,
       14,
-      34
+      34,
     );
 
     autoTable(doc, {
       startY: 40,
       head: [
-        ["Title", "Category", "Status", "Sentiment", "Rating", "Submission", "Student", "Date", "Comment"],
+        [
+          "Title",
+          "Category",
+          "Status",
+          "Sentiment",
+          "Rating",
+          "Submission",
+          "Student",
+          "Date",
+          "Comment",
+        ],
       ],
       body: filteredItems.map((item) => [
         item.title,
@@ -268,7 +276,9 @@ export default function AdminReportsPage() {
         item.sentiment || "unprocessed",
         `${item.rating}/5`,
         item.isAnonymous ? "Anonymous" : "Identified",
-        item.isAnonymous ? "Hidden" : item.studentName || item.studentEmail || "—",
+        item.isAnonymous
+          ? "Hidden"
+          : item.studentName || item.studentEmail || "—",
         formatDate(item.createdAt),
         item.comment,
       ]),
@@ -286,7 +296,9 @@ export default function AdminReportsPage() {
     <main className="flex-1">
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         <div>
-          <h2 className="text-2xl font-display font-semibold text-ink">Reports</h2>
+          <h2 className="text-2xl font-display font-semibold text-ink">
+            Reports
+          </h2>
           <p className="text-sm text-muted mt-1">
             Generate and export institutional feedback summaries.
           </p>
@@ -294,9 +306,21 @@ export default function AdminReportsPage() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <SummaryCard label="Filtered Feedback" value={totalCount} />
-          <SummaryCard label="Pending" value={pendingCount} valueColor="text-pending" />
-          <SummaryCard label="Resolved" value={resolvedCount} valueColor="text-positive" />
-          <SummaryCard label="Average Rating" value={averageRating} valueColor="text-accent" />
+          <SummaryCard
+            label="Pending"
+            value={pendingCount}
+            valueColor="text-pending"
+          />
+          <SummaryCard
+            label="Resolved"
+            value={resolvedCount}
+            valueColor="text-positive"
+          />
+          <SummaryCard
+            label="Average Rating"
+            value={averageRating}
+            valueColor="text-accent"
+          />
         </div>
 
         <section className="bg-paper border border-rule rounded-card">
@@ -428,7 +452,9 @@ export default function AdminReportsPage() {
             </div>
           ) : filteredItems.length === 0 ? (
             <div className="px-6 py-14 text-center">
-              <p className="text-sm font-medium text-ink-2">No report data found</p>
+              <p className="text-sm font-medium text-ink-2">
+                No report data found
+              </p>
               <p className="text-xs text-muted mt-1">
                 Try adjusting your filters to preview report entries.
               </p>
@@ -469,17 +495,24 @@ export default function AdminReportsPage() {
 
                   <tbody>
                     {filteredItems.slice(0, 20).map((item) => (
-                      <tr key={item.id} className="border-b border-rule last:border-b-0">
+                      <tr
+                        key={item.id}
+                        className="border-b border-rule last:border-b-0"
+                      >
                         <td className="px-6 py-4">
                           <div>
-                            <p className="text-sm font-medium text-ink">{item.title}</p>
+                            <p className="text-sm font-medium text-ink">
+                              {item.title}
+                            </p>
                             <p className="text-xs text-muted mt-1 line-clamp-2">
                               {item.comment}
                             </p>
                           </div>
                         </td>
 
-                        <td className="px-6 py-4 text-sm text-ink-2">{item.category}</td>
+                        <td className="px-6 py-4 text-sm text-ink-2">
+                          {item.category}
+                        </td>
 
                         <td className="px-6 py-4">
                           <StatusBadge status={item.status} />
@@ -489,7 +522,9 @@ export default function AdminReportsPage() {
                           <SentimentBadge sentiment={item.sentiment} />
                         </td>
 
-                        <td className="px-6 py-4 text-sm font-outlier text-ink-2">{item.rating}/5</td>
+                        <td className="px-6 py-4 text-sm font-outlier text-ink-2">
+                          {item.rating}/5
+                        </td>
 
                         <td className="px-6 py-4">
                           <span
@@ -521,24 +556,36 @@ export default function AdminReportsPage() {
               {/* Mobile: stacked key/value rows instead of a cramped table */}
               <div className="sm:hidden flex flex-col">
                 {filteredItems.slice(0, 20).map((item) => (
-                  <div key={item.id} className="px-6 py-4 border-b border-rule last:border-b-0 flex flex-col gap-2">
+                  <div
+                    key={item.id}
+                    className="px-6 py-4 border-b border-rule last:border-b-0 flex flex-col gap-2"
+                  >
                     <div className="flex items-start justify-between gap-3">
-                      <p className="text-sm font-medium text-ink">{item.title}</p>
+                      <p className="text-sm font-medium text-ink">
+                        {item.title}
+                      </p>
                       <span className="text-xs font-outlier text-muted shrink-0">
                         {formatDate(item.createdAt)}
                       </span>
                     </div>
-                    <p className="text-xs text-muted line-clamp-2">{item.comment}</p>
+                    <p className="text-xs text-muted line-clamp-2">
+                      {item.comment}
+                    </p>
                     <div className="flex flex-wrap items-center gap-2 pt-1">
                       <StatusBadge status={item.status} />
                       <SentimentBadge sentiment={item.sentiment} />
-                      <span className="text-xs font-outlier text-ink-2">{item.rating}/5</span>
+                      <span className="text-xs font-outlier text-ink-2">
+                        {item.rating}/5
+                      </span>
                       <span className="text-xs px-2.5 py-1 rounded-pill bg-paper-3 text-ink-2">
                         {item.isAnonymous ? "Anonymous" : "Identified"}
                       </span>
                     </div>
                     <p className="text-xs text-muted">
-                      {item.category} · {item.isAnonymous ? "Hidden" : item.studentName || item.studentEmail || "—"}
+                      {item.category} ·{" "}
+                      {item.isAnonymous
+                        ? "Hidden"
+                        : item.studentName || item.studentEmail || "—"}
                     </p>
                   </div>
                 ))}
@@ -547,8 +594,9 @@ export default function AdminReportsPage() {
               {filteredItems.length > 20 && (
                 <div className="px-6 py-3 border-t border-rule bg-paper-2">
                   <p className="text-xs text-muted">
-                    Showing first 20 preview rows out of {filteredItems.length} filtered records.
-                    The CSV and PDF exports include all filtered records.
+                    Showing first 20 preview rows out of {filteredItems.length}{" "}
+                    filtered records. The CSV and PDF exports include all
+                    filtered records.
                   </p>
                 </div>
               )}

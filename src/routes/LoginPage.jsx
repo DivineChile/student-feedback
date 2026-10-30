@@ -53,7 +53,7 @@ export default function LoginPage() {
 
         {/* Footer note */}
         <p className="text-xs text-center text-ink-2 mt-6">
-          Your identity is always kept anonymous on CampusVoice.
+          Your identity is always kept anonymous on FPOG Student Feedback.
         </p>
       </div>
     </main>

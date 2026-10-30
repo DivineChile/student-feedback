@@ -32,7 +32,7 @@ export default function RegisterPage() {
               Create Your Student Account
             </h1>
             <p className="text-sm text-ink-2 mt-1.5">
-              Join CampusVoice and make your campus better.
+              Join FPOG Student Fedback and make your campus better.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ export default function RegisterPage() {
 
         {/* Footer note */}
         <p className="text-xs text-center text-ink-2 mt-6">
-          Your identity is always kept anonymous on CampusVoice.
+          Your identity is always kept anonymous on FPOG Student Feedback.
         </p>
       </div>
     </main>

@@ -15,19 +15,29 @@ export default function Footer() {
           <div className="flex flex-wrap items-baseline justify-between gap-4 pt-4 border-t border-white/15">
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 bg-accent rounded-[var(--radius-input)] flex items-center justify-center">
-                <span className="text-accent-ink font-display font-semibold text-[10px]">CV</span>
+                <span className="text-accent-ink font-display font-semibold text-[10px]">
+                  CV
+                </span>
               </div>
-              <span className="font-display font-medium text-paper text-sm">CampusVoice</span>
+              <span className="font-display font-medium text-paper text-sm">
+                CampusVoice
+              </span>
             </div>
 
             <div className="flex items-center gap-5 text-sm text-paper/60">
-              <Link to="/login" className="hover:text-paper transition-colors duration-200">
+              <Link
+                to="/login"
+                className="hover:text-paper transition-colors duration-200"
+              >
                 Login
               </Link>
-              <Link to="/register" className="hover:text-paper transition-colors duration-200">
+              <Link
+                to="/register"
+                className="hover:text-paper transition-colors duration-200"
+              >
                 Register
               </Link>
-              <span>&copy; {currentYear} CampusVoice</span>
+              <span>&copy; {currentYear} Student Feedback</span>
             </div>
           </div>
         </div>
