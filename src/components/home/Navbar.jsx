@@ -28,12 +28,17 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex justify-between md:grid md:grid-cols-[1fr_auto_1fr] items-center h-16">
         {/* Brand — hard left */}
-        <a href="#" className="justify-self-start flex items-center gap-2">
-          <div className="w-8 h-8 bg-accent rounded-[var(--radius-input)] flex items-center justify-center">
-            <span className="text-accent-ink font-display font-semibold text-sm">CV</span>
-          </div>
-          <span className="font-display font-semibold text-ink text-lg">CampusVoice</span>
-        </a>
+        {/* School logo and application name */}
+        <Link to="/" className="justify-self-start flex items-center gap-2">
+          <img
+            src="/images/school-logo.jpg"
+            alt="Federal Polytechnic of Oil and Gas logo"
+            className="h-10 w-10 object-contain shrink-0"
+          />
+          <span className="font-display font-semibold text-ink text-base sm:text-lg">
+            Student Feedback
+          </span>
+        </Link>
 
         {/* Centre link cluster */}
         <nav className="hidden md:flex justify-self-center items-center gap-6">

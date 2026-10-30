@@ -1,11 +1,20 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, MessageSquarePlus, ClipboardList, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  MessageSquarePlus,
+  ClipboardList,
+  LogOut,
+} from "lucide-react";
 import { signOut } from "@/lib/auth";
 import { showToast } from "../ui/toast";
 
 export const navLinks = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Submit Feedback", href: "/dashboard/submit-feedback", icon: MessageSquarePlus },
+  {
+    label: "Submit Feedback",
+    href: "/dashboard/submit-feedback",
+    icon: MessageSquarePlus,
+  },
   { label: "My Feedback", href: "/dashboard/my-feedback", icon: ClipboardList },
 ];
 
@@ -27,11 +36,18 @@ export default function Sidebar() {
     <aside className="w-60 h-full bg-paper-2 border-r border-rule flex flex-col">
       {/* Logo */}
       <div className="px-6 py-5 border-b border-rule">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
-            <span className="text-accent-ink font-display font-semibold text-xs">CV</span>
+        <Link to="/" className="flex items-center gap-3">
+          <img
+            src="/images/school-logo.jpg"
+            alt="School logo"
+            className="h-12 w-12 shrink-0 object-contain"
+          />
+          <div className="min-w-0">
+            <span className="block font-display font-semibold text-ink text-sm">
+              Student Feedback
+            </span>
+            <span className="block text-xs text-ink-2">FPOG, Bonny Island</span>
           </div>
-          <span className="font-display font-semibold text-ink text-base">CampusVoice</span>
         </Link>
       </div>
 

@@ -165,11 +165,11 @@ export default function DashboardHeader({
         {/* LEFT — Logo (mobile only) + Title */}
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2 md:hidden">
-            <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
-              <span className="text-accent-ink font-display font-semibold text-xs">
-                CV
-              </span>
-            </div>
+            <img
+              src="/images/school-logo.jpg"
+              alt="School logo"
+              className="h-9 w-9 shrink-0 object-contain"
+            />
           </Link>
 
           <div>

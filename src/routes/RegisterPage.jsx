@@ -2,17 +2,25 @@ import { Link } from "react-router-dom";
 import RegisterForm from "@/components/auth/RegisterForm";
 
 export default function RegisterPage() {
-return (
+  return (
     <main className="min-h-screen bg-paper flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-[30rem]">
-
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-accent rounded-input flex items-center justify-center">
-              <span className="text-accent-ink font-display font-semibold text-sm">CV</span>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/images/school-logo.jpg"
+              alt="Federal Polytechnic of Oil and Gas logo"
+              className="h-16 w-16 object-contain"
+            />
+            <div>
+              <p className="font-display font-semibold text-ink text-base">
+                Student Feedback
+              </p>
+              <p className="text-xs text-ink-2">
+                Federal Polytechnic of Oil and Gas
+              </p>
             </div>
-            <span className="font-display font-semibold text-ink text-lg">CampusVoice</span>
           </Link>
         </div>
 

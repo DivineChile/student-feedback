@@ -53,17 +53,22 @@ export default function AdminSidebar() {
     <aside className="w-64 h-full bg-paper-2 border-r border-rule flex flex-col">
       {/* Logo / title area */}
       <div className="px-6 py-5 border-b border-rule">
-        <div className="flex items-center gap-2.5 mb-1">
-          <div className="w-7 h-7 bg-accent rounded-[var(--radius-input)] flex items-center justify-center shrink-0">
-            <span className="text-accent-ink font-display font-semibold text-xs">
-              CV
+        <div className="flex items-center gap-3 mb-2">
+          <img
+            src="/images/school-logo.jpg"
+            alt="School logo"
+            className="h-12 w-12 shrink-0 object-contain"
+          />
+          <div className="min-w-0">
+            <span className="block font-display font-semibold text-ink text-sm">
+              {profile?.role === "admin" ? "Super Admin" : "Sub-admin"}
+            </span>
+            <span className="block text-xs text-muted mt-1">
+              Student Feedback System
             </span>
           </div>
-          <span className="font-display font-semibold text-ink text-base">
-            {profile?.role === "admin" ? "Super Admin" : "Sub-admin"}
-          </span>
         </div>
-        <p className="text-xs text-muted pl-9">
+        <p className="text-xs text-muted">
           {profile?.role === "admin"
             ? "Institutional feedback management"
             : "Manage feedback assigned to your office"}
